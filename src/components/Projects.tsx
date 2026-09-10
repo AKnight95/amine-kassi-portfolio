@@ -1,44 +1,52 @@
-import ProjectCard from "@/components/ProjectCard";
+import ProjectShowcase from "@/components/ProjectShowcase";
 import Reveal from "@/components/motion/Reveal";
-import {
-  Stagger,
-  StaggerItem,
-} from "@/components/motion/Stagger";
 
-import { projects } from "@/data/portfolio";
+import {
+  projects,
+} from "@/data/portfolio";
 
 export default function Projects() {
   return (
     <section
       id="projects"
-      className="site-container scroll-mt-28 py-28 md:py-36"
+      className="scroll-mt-24"
     >
-      <Reveal>
-        <div className="flex max-w-3xl flex-col">
+      <div className="site-container py-28 md:py-36">
+        <Reveal>
           <p className="section-kicker">
-            Sélection
+            Réalisations
           </p>
 
-          <h2 className="mt-3 font-display text-4xl font-semibold tracking-[-0.035em] text-white md:text-6xl">
-            Projets
-            <span className="text-accent">.</span>
+          <h2 className="mt-3 font-display text-5xl font-semibold tracking-[-0.04em] text-white md:text-6xl">
+            Mes projets
+            <span className="text-accent">
+              .
+            </span>
           </h2>
 
           <p className="mt-5 max-w-2xl text-base leading-8 text-white/45">
-            Des applications réellement développées,
-            déployées et utilisées, du produit web au
-            mobile et à l&apos;infrastructure.
+            Chaque produit possède ses propres
+            contraintes, technologies et identité
+            visuelle.
           </p>
-        </div>
-      </Reveal>
+        </Reveal>
+      </div>
 
-      <Stagger className="mt-14 grid gap-6 md:grid-cols-2">
-        {projects.map((project) => (
-          <StaggerItem key={project.name}>
-            <ProjectCard project={project} />
-          </StaggerItem>
-        ))}
-      </Stagger>
+      <div>
+        {projects.map(
+          (project, index) => (
+            <Reveal
+              key={project.slug}
+              y={20}
+            >
+              <ProjectShowcase
+                project={project}
+                index={index}
+              />
+            </Reveal>
+          ),
+        )}
+      </div>
     </section>
   );
 }

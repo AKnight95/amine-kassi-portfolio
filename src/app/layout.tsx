@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Oxanium, Poppins } from "next/font/google";
+import { Oxanium, Poppins, Montserrat } from "next/font/google";
 
 import { siteConfig } from "@/config/site";
 
@@ -16,6 +16,13 @@ const oxanium = Oxanium({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-oxanium",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-montserrat",
   display: "swap",
 });
 
@@ -71,7 +78,11 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body
-        className={`${poppins.variable} ${oxanium.variable}`}
+        className={`
+          ${poppins.variable}
+          ${oxanium.variable}
+          ${montserrat.variable}
+        `}
       >
         {children}
       </body>
