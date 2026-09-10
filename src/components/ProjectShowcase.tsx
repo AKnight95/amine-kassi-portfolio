@@ -32,12 +32,8 @@ import type {
   
   const headingFontClasses = {
     oxanium: "font-display",
-  
-    poppins:
-      "font-brand-poppins",
-  
-    montserrat:
-      "font-brand-montserrat",
+    poppins: "font-brand-poppins",
+    montserrat: "font-brand-montserrat",
   } as const;
   
   
@@ -57,11 +53,12 @@ import type {
         "0",
       );
   
-  
     return (
       <section
         className={[
           "project-showcase",
+  
+          `project-showcase--${project.slug}`,
   
           reverse
             ? "project-showcase--reverse"
@@ -94,20 +91,18 @@ import type {
           } as CSSProperties
         }
       >
-        {/* Texture de fond */}
+        {/* Fond / texture */}
         <div
           aria-hidden="true"
           className="project-showcase-grid"
         />
   
-        {/* Halo principal */}
         <div
           aria-hidden="true"
           className="project-showcase-glow"
         />
   
-        {/* Traits lumineux suivant
-            la direction des séparateurs. */}
+        {/* Traits reprenant les diagonales */}
         <div
           aria-hidden="true"
           className="
@@ -132,7 +127,6 @@ import type {
           {sectionNumber}
         </span>
   
-  
         <div
           className={[
             "showcase-container",
@@ -144,30 +138,26 @@ import type {
           ].join(" ")}
         >
           {/* =====================================================
-              INFORMATIONS
+              PRÉSENTATION
           ====================================================== */}
   
           <Reveal
             y={24}
             className="project-showcase-content"
           >
-            {/* Logo libre : aucun fond,
-                aucune bordure. */}
             <div className="project-logo-container">
               <Image
                 src={project.logo}
                 alt={`Logo ${project.name}`}
-                width={420}
-                height={150}
+                width={460}
+                height={170}
                 className="project-logo"
               />
             </div>
   
-  
             <p className="project-showcase-eyebrow">
               {project.eyebrow}
             </p>
-  
   
             <h2
               className={[
@@ -180,15 +170,12 @@ import type {
               ].join(" ")}
             >
               {project.name}
-  
               <span>.</span>
             </h2>
-  
   
             <p className="project-showcase-description">
               {project.description}
             </p>
-  
   
             <div className="project-role">
               <span>
@@ -199,7 +186,6 @@ import type {
                 {project.role}
               </strong>
             </div>
-  
   
             <div className="project-feature-preview">
               {project.features
@@ -223,26 +209,18 @@ import type {
                 ))}
             </div>
   
-  
             <div className="mt-7 flex flex-wrap gap-2">
               {project.technologies
-                .slice(0, 7)
-                .map(
-                  (technology) => (
-                    <span
-                      key={
-                        technology.name
-                      }
-                      className="project-brand-tag"
-                    >
-                      {
-                        technology.name
-                      }
-                    </span>
-                  ),
-                )}
+                .slice(0, 8)
+                .map((technology) => (
+                  <span
+                    key={technology.name}
+                    className="project-brand-tag"
+                  >
+                    {technology.name}
+                  </span>
+                ))}
             </div>
-  
   
             <div className="mt-9 flex flex-wrap items-center gap-5">
               <Link
@@ -256,7 +234,6 @@ import type {
                   size={16}
                 />
               </Link>
-  
   
               <a
                 href={project.website}
@@ -274,9 +251,8 @@ import type {
             </div>
           </Reveal>
   
-  
           {/* =====================================================
-              SHOWCASE VISUEL
+              CAROUSEL
           ====================================================== */}
   
           <Reveal
@@ -285,9 +261,7 @@ import type {
             className="project-showcase-media"
           >
             <ProjectCarousel
-              images={
-                project.images
-              }
+              images={project.images}
               projectName={
                 project.name
               }

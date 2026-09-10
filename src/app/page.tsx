@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import IntroLoader from "@/components/IntroLoader";
 import Projects from "@/components/Projects";
+import TechnologyCloud from "@/components/TechnologyCloud";
 
 export default function HomePage() {
   return (
@@ -13,8 +14,9 @@ export default function HomePage() {
       <Header />
 
       <main>
-        <Hero />
-        <Projects />
+      <Hero />
+      <TechnologyCloud />
+      <Projects />
       </main>
     </>
   );

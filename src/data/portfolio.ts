@@ -1,1106 +1,1881 @@
 // src/data/portfolio.ts
 
-/**
- * Polices disponibles pour restituer l'identité
- * graphique propre à chaque projet.
- */
-export type ProjectHeadingFont =
-  | "oxanium"
-  | "poppins"
-  | "montserrat";
-
-/**
- * Capture utilisée dans les galeries projet.
- */
-export type ProjectImage = {
-  src: string;
-  label: string;
-  alt: string;
-};
-
-/**
- * Technologie réellement utilisée sur un projet,
- * accompagnée de son rôle dans l'architecture.
- */
-export type ProjectTechnology = {
-  name: string;
-  usage: string;
-};
-
-/**
- * Mission / axe de travail présenté dans une case study.
- */
-export type ProjectMission = {
-  title: string;
-  description: string;
-  details: readonly string[];
-};
-
-/**
- * Identité visuelle propre à chaque produit.
- */
-export type ProjectTheme = {
-  background: string;
-  surface: string;
-
-  accent: string;
-  accentSecondary: string;
-
-  text: string;
-  muted: string;
-
-  headingFont: ProjectHeadingFont;
-};
-
-/**
- * Modèle complet d'un projet portfolio.
- */
-export type PortfolioProject = {
-  slug: string;
-
-  name: string;
-  eyebrow: string;
-  logo: string;
-
-  description: string;
-  longDescription: string;
-
-  website: string;
-
-  period?: string;
-  role: string;
-
-  images: readonly ProjectImage[];
-
-  technologies: readonly ProjectTechnology[];
-  features: readonly string[];
-  missions: readonly ProjectMission[];
-
-  theme: ProjectTheme;
-};
-
-
 /* ============================================================
-   PROJETS
+   TYPES
    ============================================================ */
 
-export const projects: readonly PortfolioProject[] = [
-  /* ==========================================================
-     TYBEAU
-     ========================================================== */
-
-  {
-    slug: "tybeau",
-
-    name: "Tybeau",
-
-    eyebrow: "Marketplace beauté · Web & Mobile",
-
-    logo: "/projects/tybeau/logo.png",
-
-    description:
-      "Plateforme destinée aux clients pour découvrir des professionnels, consulter leurs prestations et réserver des rendez-vous beauté.",
-
-    longDescription:
-      "Tybeau est un écosystème web et mobile sur lequel j'interviens de bout en bout : interfaces client, API métier, données, paiements, notifications, applications mobiles et déploiement. Le produit relie les clients aux établissements et professionnels autour de la recherche de prestations et de la réservation.",
-
-    website: "https://tybeau.fr",
-
-    role:
-      "Développement Full-Stack Web & Mobile",
-
-    images: [
-      {
-        src: "/projects/tybeau/home.png",
-        label: "Accueil",
-        alt: "Page d'accueil de la plateforme Tybeau",
-      },
-      {
-        src: "/projects/tybeau/search.png",
-        label: "Recherche",
-        alt: "Interface de recherche de professionnels sur Tybeau",
-      },
-      {
-        src: "/projects/tybeau/establishment.png",
-        label: "Établissement",
-        alt: "Fiche d'un établissement sur Tybeau",
-      },
-      {
-        src: "/projects/tybeau/booking.png",
-        label: "Réservation",
-        alt: "Parcours de réservation d'une prestation sur Tybeau",
-      },
-      {
-        src: "/projects/tybeau/payment.png",
-        label: "Paiement",
-        alt: "Paiement Stripe intégré au parcours Tybeau",
-      },
-    ],
-
-    technologies: [
-      {
-        name: "TypeScript",
-        usage:
-          "Langage principal partagé entre le frontend et le backend afin de conserver un typage cohérent sur l'ensemble du produit.",
-      },
-      {
-        name: "React",
-        usage:
-          "Construction des interfaces et composants interactifs de la plateforme.",
-      },
-      {
-        name: "Next.js",
-        usage:
-          "Frontend web client, routing, rendu des pages et déploiement du produit web.",
-      },
-      {
-        name: "React Native",
-        usage:
-          "Développement de l'application mobile client à partir d'une base TypeScript commune.",
-      },
-      {
-        name: "Expo",
-        usage:
-          "Toolchain mobile, builds et gestion des versions Android et iOS.",
-      },
-      {
-        name: "Node.js",
-        usage:
-          "Runtime de l'API et des traitements serveur.",
-      },
-      {
-        name: "NestJS",
-        usage:
-          "Backend métier : API, authentification, rendez-vous, paiements, notifications et règles applicatives.",
-      },
-      {
-        name: "Prisma",
-        usage:
-          "Accès typé aux données et gestion du schéma applicatif.",
-      },
-      {
-        name: "PostgreSQL",
-        usage:
-          "Base relationnelle pour les utilisateurs, établissements, prestations, rendez-vous et données métier.",
-      },
-      {
-        name: "AWS",
-        usage:
-          "Hébergement et services cloud utilisés par l'écosystème.",
-      },
-      {
-        name: "Stripe",
-        usage:
-          "Paiements en ligne intégrés au parcours de réservation.",
-      },
-      {
-        name: "Stripe Connect",
-        usage:
-          "Gestion des flux de paiement liés aux professionnels de la marketplace.",
-      },
-      {
-        name: "GitHub Actions",
-        usage:
-          "Automatisation de tâches de CI/CD et de déploiement.",
-      },
-      {
-        name: "Vercel",
-        usage:
-          "Déploiement et livraison continue des applications web Next.js.",
-      },
-    ],
-
-    features: [
-      "Recherche de professionnels et prestations",
-      "Réservation et gestion des rendez-vous",
-      "Application mobile client",
-      "Authentification Google, Facebook et Apple",
-      "Gestion des comptes et rôles",
-      "Paiements complets ou partiels",
-      "Stripe et Stripe Connect",
-      "Notifications push",
-      "E-mails et SMS",
-      "Tâches CRON",
-      "Internationalisation FR / EN / AR",
-      "Déploiements web et mobile",
-    ],
-
-    missions: [
-      {
-        title: "Développement produit Full-Stack",
-        description:
-          "Participation au développement de l'écosystème client en couvrant aussi bien les interfaces que l'API et les modèles de données.",
-        details: [
-          "Développement d'interfaces Next.js et TypeScript.",
-          "Création et évolution des endpoints NestJS.",
-          "Modélisation des données avec Prisma et PostgreSQL.",
-          "Correction et évolution de fonctionnalités déjà utilisées en production.",
-        ],
-      },
-      {
-        title: "Recherche & réservation",
-        description:
-          "Mise en œuvre du parcours permettant à un client de trouver une prestation puis de réserver un créneau disponible.",
-        details: [
-          "Gestion des établissements, prestations et catégories.",
-          "Prise en compte des horaires et indisponibilités.",
-          "Création et suivi des rendez-vous.",
-          "Gestion du lieu, de l'adresse et de l'horaire du rendez-vous.",
-        ],
-      },
-      {
-        title: "Paiements",
-        description:
-          "Intégration d'une logique de paiement adaptée aux différentes prestations proposées par les professionnels.",
-        details: [
-          "Intégration de Stripe.",
-          "Utilisation de Stripe Connect.",
-          "Gestion de prestations sans paiement, avec paiement complet ou acompte.",
-          "Gestion des acomptes fixes ou basés sur un pourcentage.",
-        ],
-      },
-      {
-        title: "Notifications & automatisations",
-        description:
-          "Automatisation des communications autour des rendez-vous afin de réduire les actions manuelles.",
-        details: [
-          "Notifications push liées aux rendez-vous.",
-          "Rappels par SMS.",
-          "E-mails transactionnels.",
-          "Tâches CRON pour déclencher les traitements planifiés.",
-          "Workflow post-rendez-vous pour solliciter les avis clients.",
-        ],
-      },
-      {
-        title: "Application mobile",
-        description:
-          "Développement et maintenance de l'application cliente React Native / Expo.",
-        details: [
-          "Base TypeScript avec React Native.",
-          "Builds Expo / EAS.",
-          "Gestion des versions Android et iOS.",
-          "Intégration des authentifications sociales et des fonctionnalités métier.",
-        ],
-      },
-      {
-        title: "Mise en production",
-        description:
-          "Participation à l'exploitation réelle du produit, au-delà du développement local.",
-        details: [
-          "Déploiements web automatisés.",
-          "Gestion des environnements et variables de configuration.",
-          "Services AWS.",
-          "Suivi des incidents et corrections en production.",
-        ],
-      },
-    ],
-
-    theme: {
-      background:
-        "linear-gradient(135deg, #ffffff 0%, #faf9f6 58%, #f3ecdc 100%)",
-
-      surface:
-        "rgba(255, 255, 255, 0.76)",
-
-      accent: "#CDAA58",
-      accentSecondary: "#D6B25E",
-
-      text: "#151515",
-      muted: "#706858",
-
-      headingFont: "montserrat",
-    },
-  },
-
-
-  /* ==========================================================
-     TYBEAU PRO
-     ========================================================== */
-
-  {
-    slug: "tybeau-pro",
-
-    name: "Tybeau Pro",
-
-    eyebrow:
-      "Application professionnelle · Web & Mobile",
-
-    logo: "/projects/tybeau-pro/logo.png",
-
-    description:
-      "Interface métier destinée aux établissements, managers et collaborateurs de l'écosystème Tybeau.",
-
-    longDescription:
-      "Tybeau Pro constitue la partie métier de l'écosystème. L'application centralise la gestion des établissements, collaborateurs, clients, prestations, rendez-vous, permissions, communications et paiements, à travers des interfaces web et mobiles adaptées aux différents rôles.",
-
-    website: "https://pro.tybeau.fr",
-
-    role:
-      "Développement Full-Stack Web & Mobile",
-
-    images: [
-      {
-        src: "/projects/tybeau-pro/dashboard.png",
-        label: "Dashboard",
-        alt: "Dashboard principal de Tybeau Pro",
-      },
-      {
-        src: "/projects/tybeau-pro/establishment.png",
-        label: "Établissement",
-        alt: "Gestion d'un établissement dans Tybeau Pro",
-      },
-      {
-        src: "/projects/tybeau-pro/collaborators.png",
-        label: "Collaborateurs",
-        alt: "Gestion des collaborateurs dans Tybeau Pro",
-      },
-      {
-        src: "/projects/tybeau-pro/sms.png",
-        label: "Campagnes SMS",
-        alt: "Gestion des campagnes SMS dans Tybeau Pro",
-      },
-      {
-        src: "/projects/tybeau-pro/admin-users.png",
-        label: "Administration",
-        alt: "Administration des utilisateurs dans Tybeau Pro",
-      },
-      {
-        src: "/projects/tybeau-pro/validation.png",
-        label: "Validation",
-        alt: "Validation des produits dans Tybeau Pro",
-      },
-    ],
-
-    technologies: [
-      {
-        name: "TypeScript",
-        usage:
-          "Langage commun des applications web, mobile et du backend.",
-      },
-      {
-        name: "React",
-        usage:
-          "Interfaces web professionnelles et composants du back-office.",
-      },
-      {
-        name: "Next.js",
-        usage:
-          "Application web destinée aux professionnels et aux espaces d'administration.",
-      },
-      {
-        name: "React Native",
-        usage:
-          "Application mobile professionnelle.",
-      },
-      {
-        name: "Expo",
-        usage:
-          "Gestion des builds et livraisons Android / iOS.",
-      },
-      {
-        name: "Node.js",
-        usage:
-          "Runtime des services backend.",
-      },
-      {
-        name: "NestJS",
-        usage:
-          "API métier, permissions, agenda, clients, produits, paiements et administration.",
-      },
-      {
-        name: "Prisma",
-        usage:
-          "Couche d'accès typée à la base PostgreSQL.",
-      },
-      {
-        name: "PostgreSQL",
-        usage:
-          "Persistance des établissements, utilisateurs, produits, rendez-vous et données métier.",
-      },
-      {
-        name: "AWS",
-        usage:
-          "Infrastructure et services cloud de l'écosystème.",
-      },
-      {
-        name: "Stripe",
-        usage:
-          "Traitement des paiements associés aux prestations.",
-      },
-      {
-        name: "Stripe Connect",
-        usage:
-          "Flux financiers entre la plateforme et les comptes professionnels.",
-      },
-      {
-        name: "Stripe Terminal",
-        usage:
-          "Travaux d'intégration du paiement physique et de Tap to Pay dans l'application professionnelle.",
-      },
-      {
-        name: "GitHub Actions",
-        usage:
-          "Automatisation des processus de livraison et de déploiement.",
-      },
-    ],
-
-    features: [
-      "Gestion des établissements",
-      "Gestion des collaborateurs et clients",
-      "Agenda et rendez-vous",
-      "Gestion des prestations et produits",
-      "Rôles et permissions",
-      "Espaces Owner, Manager, Pro, Admin et Commercial",
-      "Paiements et acomptes",
-      "Stripe Connect",
-      "Stripe Terminal / Tap to Pay",
-      "Campagnes SMS",
-      "Notifications",
-      "Applications Android et iOS",
-      "Validation et administration des contenus",
-    ],
-
-    missions: [
-      {
-        title: "Interfaces métier",
-        description:
-          "Construction et évolution des écrans utilisés quotidiennement par les professionnels.",
-        details: [
-          "Dashboards d'établissement.",
-          "Gestion des clients et collaborateurs.",
-          "Gestion des prestations et produits.",
-          "Interfaces adaptées aux différents rôles utilisateur.",
-        ],
-      },
-      {
-        title: "Rôles & permissions",
-        description:
-          "Mise en place d'un système d'accès permettant d'adapter les fonctionnalités aux responsabilités de chaque utilisateur.",
-        details: [
-          "OWNER pour l'administration de l'établissement.",
-          "MANAGER et PRO pour les usages opérationnels.",
-          "ADMIN pour les fonctions de plateforme.",
-          "COMMERCIAL avec permissions spécifiques et accès contextualisés.",
-        ],
-      },
-      {
-        title: "Agenda & rendez-vous",
-        description:
-          "Développement des outils métier utilisés pour organiser et suivre les prestations.",
-        details: [
-          "Affichage et gestion des rendez-vous.",
-          "Association clients, professionnels et prestations.",
-          "Gestion des disponibilités et absences.",
-          "Notifications et rappels automatisés.",
-        ],
-      },
-      {
-        title: "Paiements & Tap to Pay",
-        description:
-          "Travail sur plusieurs parcours de paiement, depuis la réservation en ligne jusqu'au paiement physique.",
-        details: [
-          "Stripe et Stripe Connect.",
-          "Paiements complets et acomptes.",
-          "Intégration Stripe Terminal.",
-          "Travaux d'intégration Tap to Pay sur iPhone.",
-          "Gestion du connection token côté backend.",
-        ],
-      },
-      {
-        title: "Administration",
-        description:
-          "Développement d'outils internes permettant de piloter les utilisateurs et contenus de la plateforme.",
-        details: [
-          "Gestion des utilisateurs.",
-          "Gestion des établissements.",
-          "Gestion des collaborateurs.",
-          "Validation des produits.",
-          "Gestion des catégories.",
-        ],
-      },
-      {
-        title: "Mobile & stores",
-        description:
-          "Participation au cycle complet de l'application professionnelle mobile.",
-        details: [
-          "React Native avec Expo.",
-          "Builds Android et iOS.",
-          "Configuration des identifiants applicatifs.",
-          "Préparation et soumission des versions aux stores.",
-        ],
-      },
-    ],
-
-    theme: {
-      background:
-        "radial-gradient(circle at 82% 20%, rgba(205,170,88,.13), transparent 30%), linear-gradient(135deg, #070708 0%, #0B0B0C 54%, #141108 100%)",
-
-      surface:
-        "rgba(16, 15, 12, 0.78)",
-
-      accent: "#CDAA58",
-      accentSecondary: "#D6B25E",
-
-      text: "#FFFFFF",
-      muted: "#AAA292",
-
-      headingFont: "poppins",
-    },
-  },
-
-
-  /* ==========================================================
-     MYRENDEV
-     ========================================================== */
-
-  {
-    slug: "myrendev",
-
-    name: "MyRendev",
-
-    eyebrow:
-      "Gestion de rendez-vous · Application métier",
-
-    logo: "/projects/myrendev/logo.png",
-
-    description:
-      "Application métier de gestion de rendez-vous, utilisateurs, interventions, communications et automatisations.",
-
-    longDescription:
-      "MyRendev est une application métier complète sur laquelle j'ai travaillé de la modélisation des données jusqu'au déploiement cloud. Le produit centralise les rendez-vous, clients, collaborateurs, interventions, communications et fonctionnalités de gestion.",
-
-    website: "https://myrendev.fr",
-
-    role:
-      "Développement Full-Stack & pilotage technique",
-
-    images: [
-      {
-        src: "/projects/myrendev/landing.png",
-        label: "Présentation",
-        alt: "Landing page de MyRendev",
-      },
-      {
-        src: "/projects/myrendev/dashboard.png",
-        label: "Dashboard",
-        alt: "Dashboard principal de MyRendev",
-      },
-      {
-        src: "/projects/myrendev/appointment.png",
-        label: "Rendez-vous",
-        alt: "Création d'un rendez-vous dans MyRendev",
-      },
-      {
-        src: "/projects/myrendev/interventions.png",
-        label: "Interventions",
-        alt: "Gestion des interventions MyRendev",
-      },
-      {
-        src: "/projects/myrendev/sms.png",
-        label: "Campagnes SMS",
-        alt: "Campagnes SMS de MyRendev",
-      },
-      {
-        src: "/projects/myrendev/billing.png",
-        label: "Facturation",
-        alt: "Paramètres de facturation de MyRendev",
-      },
-    ],
-
-    technologies: [
-      {
-        name: "TypeScript",
-        usage:
-          "Typage partagé sur le frontend et le backend.",
-      },
-      {
-        name: "React",
-        usage:
-          "Création des interfaces métier.",
-      },
-      {
-        name: "Next.js",
-        usage:
-          "Frontend principal de l'application.",
-      },
-      {
-        name: "Node.js",
-        usage:
-          "Runtime du backend.",
-      },
-      {
-        name: "NestJS",
-        usage:
-          "API, logique métier, authentification et traitements serveur.",
-      },
-      {
-        name: "Prisma",
-        usage:
-          "ORM typé et gestion de l'accès aux données.",
-      },
-      {
-        name: "PostgreSQL",
-        usage:
-          "Stockage relationnel des données métier.",
-      },
-      {
-        name: "AWS Lightsail",
-        usage:
-          "Hébergement du backend et de l'environnement serveur.",
-      },
-      {
-        name: "AWS S3",
-        usage:
-          "Stockage de fichiers et génération d'URLs pré-signées.",
-      },
-      {
-        name: "AWS SES",
-        usage:
-          "Envoi des e-mails transactionnels.",
-      },
-      {
-        name: "GitHub Actions",
-        usage:
-          "Automatisation du processus de déploiement.",
-      },
-      {
-        name: "Nginx",
-        usage:
-          "Reverse proxy et exposition sécurisée de l'application.",
-      },
-      {
-        name: "PM2",
-        usage:
-          "Gestion du processus Node.js en production.",
-      },
-    ],
-
-    features: [
-      "Rendez-vous",
-      "Clients et collaborateurs",
-      "Interventions",
-      "Authentification et rôles",
-      "Permissions",
-      "Absences",
-      "Stocks",
-      "Facturation",
-      "Campagnes SMS",
-      "E-mails",
-      "Fichiers S3",
-      "Dashboards",
-      "CI/CD",
-    ],
-
-    missions: [
-      {
-        title: "Architecture Full-Stack",
-        description:
-          "Développement d'une architecture moderne séparant frontend Next.js, API NestJS et données PostgreSQL.",
-        details: [
-          "Frontend React / Next.js.",
-          "API REST NestJS.",
-          "Prisma pour l'accès aux données.",
-          "PostgreSQL pour la persistance.",
-        ],
-      },
-      {
-        title: "Gestion métier",
-        description:
-          "Développement des différents modules nécessaires à l'activité quotidienne.",
-        details: [
-          "Clients et collaborateurs.",
-          "Rendez-vous.",
-          "Interventions.",
-          "Absences.",
-          "Stocks.",
-          "Permissions.",
-        ],
-      },
-      {
-        title: "Communications",
-        description:
-          "Centralisation de plusieurs canaux de communication depuis l'application.",
-        details: [
-          "Campagnes SMS.",
-          "E-mails transactionnels via AWS SES.",
-          "Suivi des envois.",
-          "Automatisations liées aux événements métier.",
-        ],
-      },
-      {
-        title: "Fichiers & cloud",
-        description:
-          "Intégration du stockage cloud pour ne pas dépendre du serveur applicatif.",
-        details: [
-          "AWS S3.",
-          "URLs pré-signées.",
-          "Gestion des uploads.",
-          "Séparation stockage / application.",
-        ],
-      },
-      {
-        title: "Production & CI/CD",
-        description:
-          "Déploiement de l'application et automatisation des livraisons.",
-        details: [
-          "AWS Lightsail.",
-          "Linux.",
-          "Nginx.",
-          "PM2.",
-          "GitHub Actions.",
-          "HTTPS et configuration des domaines.",
-        ],
-      },
-    ],
-
-    theme: {
-      background:
-        "radial-gradient(circle at 18% 28%, rgba(56,189,248,.12), transparent 32%), linear-gradient(135deg, #07121A 0%, #071822 60%, #041016 100%)",
-
-      surface:
-        "rgba(7, 23, 32, 0.72)",
-
-      accent: "#38BDF8",
-      accentSecondary: "#22D3EE",
-
-      text: "#FFFFFF",
-      muted: "#94A9B6",
-
-      headingFont: "poppins",
-    },
-  },
-
-
-  /* ==========================================================
-     SPECTRAL
-     ========================================================== */
-
-  {
-    slug: "spectral",
-
-    name: "Spectral",
-
-    eyebrow:
-      "Projet personnel · Univers interactif",
-
-    logo: "/projects/spectral/logo.png",
-
-    description:
-      "Plateforme consacrée à un univers Dark Fantasy original avec encyclopédie interactive, personnages, factions et contenu narratif.",
-
-    longDescription:
-      "Spectral est mon projet personnel orienté développement frontend et UI/UX. Il me permet de concevoir une identité graphique complète tout en expérimentant des interfaces riches, des systèmes de recherche et de filtrage ainsi qu'un back-office permettant d'administrer le contenu de l'univers.",
-
-    website:
-      "https://spectralunivers.com",
-
-    role:
-      "Conception, développement & direction artistique",
-
-    images: [
-      {
-        src: "/projects/spectral/home.png",
-        label: "Accueil",
-        alt: "Accueil de Spectral The Age of Iron",
-      },
-      {
-        src: "/projects/spectral/univers.png",
-        label: "Univers",
-        alt: "Présentation de l'univers Spectral",
-      },
-      {
-        src: "/projects/spectral/units.png",
-        label: "Encyclopédie",
-        alt: "Encyclopédie de Spectral",
-      },
-      {
-        src: "/projects/spectral/unit-detail.png",
-        label: "Fiche détaillée",
-        alt: "Fiche d'une unité dans Spectral",
-      },
-      {
-        src: "/projects/spectral/dashboard.png",
-        label: "Back-office",
-        alt: "Dashboard d'administration de Spectral",
-      },
-    ],
-
-    technologies: [
-      {
-        name: "TypeScript",
-        usage:
-          "Typage des composants, données et comportements de l'interface.",
-      },
-      {
-        name: "React",
-        usage:
-          "Construction des interfaces interactives et réutilisables.",
-      },
-      {
-        name: "Next.js",
-        usage:
-          "Architecture du site, routing et organisation des pages.",
-      },
-      {
-        name: "Tailwind CSS",
-        usage:
-          "Construction du design system, responsive et effets visuels.",
-      },
-    ],
-
-    features: [
-      "Encyclopédie interactive",
-      "Personnages et unités",
-      "Classes et factions",
-      "Recherche",
-      "Filtres dynamiques",
-      "Galeries",
-      "Back-office",
-      "Design system personnalisé",
-      "Responsive design",
-    ],
-
-    missions: [
-      {
-        title: "Direction artistique & Design System",
-        description:
-          "Création d'une identité graphique cohérente inspirée d'interfaces fantasy / science-fiction.",
-        details: [
-          "Glassmorphism.",
-          "Effets néon.",
-          "Palettes liées aux factions.",
-          "Composants réutilisables.",
-          "Responsive design.",
-        ],
-      },
-      {
-        title: "Encyclopédie interactive",
-        description:
-          "Conception de l'interface permettant d'explorer un volume important de contenu narratif.",
-        details: [
-          "Fiches personnages.",
-          "Unités.",
-          "Classes.",
-          "Factions.",
-          "Navigation entre contenus liés.",
-        ],
-      },
-      {
-        title: "Recherche & filtrage",
-        description:
-          "Création d'outils permettant d'explorer les contenus selon plusieurs critères.",
-        details: [
-          "Recherche textuelle.",
-          "Filtres par type.",
-          "Filtres par classe.",
-          "Interfaces adaptées aux grands volumes de cartes.",
-        ],
-      },
-      {
-        title: "Back-office",
-        description:
-          "Création d'interfaces séparées pour administrer les contenus du site.",
-        details: [
-          "Dashboard.",
-          "Gestion des contenus.",
-          "Interfaces dédiées à l'administration.",
-          "Séparation entre consultation publique et gestion.",
-        ],
-      },
-    ],
-
-    theme: {
-      background:
-        "radial-gradient(circle at 15% 20%, rgba(0,230,230,.14), transparent 30%), radial-gradient(circle at 85% 70%, rgba(192,0,255,.14), transparent 30%), #020506",
-
-      surface:
-        "rgba(2, 8, 10, 0.72)",
-
-      accent: "#00E6E6",
-      accentSecondary: "#C000FF",
-
-      text: "#FFFFFF",
-      muted: "#8C9A9E",
-
-      headingFont: "oxanium",
-    },
-  },
-
-
-  /* ==========================================================
-     COGESSUR
-     ========================================================== */
-
-  {
-    slug: "cogessur",
-
-    name: "Cogessur",
-
-    eyebrow:
-      "Site corporate · WordPress",
-
-    logo:
-      "/projects/cogessur/logo.webp",
-
-    description:
-      "Site vitrine réalisé au début de mon parcours professionnel pour un cabinet de courtage en assurances.",
-
-    longDescription:
-      "Cogessur fait partie de mes premières réalisations professionnelles. Le projet consistait à créer et intégrer un site WordPress présentant le cabinet, ses offres d'assurance, ses contenus et ses différents parcours de contact.",
-
-    website:
-      "https://www.cogessur.com",
-
-    period:
-      "Première année d'alternance",
-
-    role:
-      "Développement & intégration WordPress",
-
-    images: [
-      {
-        src: "/projects/cogessur/home.png",
-        label: "Accueil",
-        alt: "Accueil du site Cogessur",
-      },
-      {
-        src: "/projects/cogessur/insurance.png",
-        label: "Assurances",
-        alt: "Offres d'assurance Cogessur",
-      },
-      {
-        src: "/projects/cogessur/about.png",
-        label: "Le cabinet",
-        alt: "Présentation du cabinet Cogessur",
-      },
-      {
-        src: "/projects/cogessur/news.png",
-        label: "Actualités",
-        alt: "Actualités Cogessur",
-      },
-      {
-        src: "/projects/cogessur/contact.png",
-        label: "Contact",
-        alt: "Page contact Cogessur",
-      },
-      {
-        src: "/projects/cogessur/claim.png",
-        label: "Réclamation",
-        alt: "Formulaire de réclamation Cogessur",
-      },
-    ],
-
-    technologies: [
-      {
-        name: "WordPress",
-        usage:
-          "CMS utilisé pour structurer et administrer les contenus du site.",
-      },
-      {
-        name: "PHP",
-        usage:
-          "Technologie backend de l'environnement WordPress.",
-      },
-      {
-        name: "HTML",
-        usage:
-          "Structure des contenus et interfaces.",
-      },
-      {
-        name: "CSS",
-        usage:
-          "Mise en forme et adaptation responsive.",
-      },
-      {
-        name: "JavaScript",
-        usage:
-          "Interactions côté navigateur.",
-      },
-    ],
-
-    features: [
-      "Site responsive",
-      "Offres d'assurance",
-      "Parcours particuliers",
-      "Parcours professionnels",
-      "Actualités",
-      "Formulaires de contact",
-      "Réclamations",
-      "Gestion WordPress",
-    ],
-
-    missions: [
-      {
-        title: "Intégration WordPress",
-        description:
-          "Construction du site vitrine à partir de WordPress et adaptation des différentes pages au besoin du cabinet.",
-        details: [
-          "Structure générale du site.",
-          "Pages de contenu.",
-          "Navigation.",
-          "Intégration graphique.",
-        ],
-      },
-      {
-        title: "Présentation des offres",
-        description:
-          "Organisation des contenus d'assurance afin de proposer des parcours compréhensibles pour les visiteurs.",
-        details: [
-          "Offres particuliers.",
-          "Offres professionnels.",
-          "Pages de présentation.",
-          "Actualités.",
-        ],
-      },
-      {
-        title: "Formulaires",
-        description:
-          "Intégration des différents points de contact nécessaires au site.",
-        details: [
-          "Contact.",
-          "Demande d'information.",
-          "Réclamation.",
-        ],
-      },
-      {
-        title: "Responsive",
-        description:
-          "Adaptation des interfaces aux différentes tailles d'écran.",
-        details: [
-          "Desktop.",
-          "Tablette.",
-          "Mobile.",
-        ],
-      },
-    ],
-
-    theme: {
-      background:
-        "radial-gradient(circle at 85% 24%, rgba(36,116,154,.12), transparent 30%), linear-gradient(135deg, #F8FAFC 0%, #EEF4F8 100%)",
-
-      surface:
-        "rgba(255, 255, 255, 0.8)",
-
-      accent: "#24749A",
-      accentSecondary: "#102D40",
-
-      text: "#10212C",
-      muted: "#687985",
-
-      headingFont: "poppins",
-    },
-  },
-] as const;
-
-
-/**
- * Recherche utilisée par /projects/[slug].
- */
-export function getProjectBySlug(
-  slug: string,
-): PortfolioProject | undefined {
-  return projects.find(
-    (project) =>
-      project.slug === slug,
-  );
-}
+   export type ProjectHeadingFont =
+   | "oxanium"
+   | "poppins"
+   | "montserrat";
+ 
+ export type ProjectTechnologyCategory =
+   | "Langages"
+   | "Frontend"
+   | "Mobile"
+   | "Backend"
+   | "Data"
+   | "Cloud & DevOps"
+   | "Paiement & intégrations"
+   | "CMS"
+   | "Analytics & SEO"
+   | "Organisation"
+   | "IA & création";
+ 
+ export type ProjectImage = {
+   src: string;
+   label: string;
+   alt: string;
+ };
+ 
+ export type ProjectTechnology = {
+   name: string;
+   category: ProjectTechnologyCategory;
+   usage: string;
+ };
+ 
+ export type ProjectMission = {
+   title: string;
+   description: string;
+   details: readonly string[];
+ };
+ 
+ export type ProjectArchitecture = {
+   title: string;
+   description: string;
+   layers: readonly string[];
+ };
+ 
+ export type ProjectTheme = {
+   background: string;
+   surface: string;
+ 
+   accent: string;
+   accentSecondary: string;
+ 
+   text: string;
+   muted: string;
+ 
+   headingFont: ProjectHeadingFont;
+ };
+ 
+ export type PortfolioProject = {
+   slug: string;
+ 
+   name: string;
+   eyebrow: string;
+   logo: string;
+ 
+   description: string;
+   longDescription: string;
+ 
+   website: string;
+ 
+   period?: string;
+   role: string;
+ 
+   images: readonly ProjectImage[];
+ 
+   technologies: readonly ProjectTechnology[];
+   features: readonly string[];
+   missions: readonly ProjectMission[];
+ 
+   architecture: ProjectArchitecture;
+ 
+   security: readonly string[];
+   seo: readonly string[];
+ 
+   theme: ProjectTheme;
+ };
+ 
+ 
+ /* ============================================================
+    TYBEAU
+    ============================================================ */
+ 
+ const tybeau: PortfolioProject = {
+   slug: "tybeau",
+ 
+   name: "Tybeau",
+ 
+   eyebrow: "Marketplace beauté · Web & Mobile",
+ 
+   logo: "/projects/tybeau/logo.png",
+ 
+   description:
+     "Plateforme destinée aux clients pour découvrir des professionnels, consulter leurs prestations et réserver des rendez-vous beauté.",
+ 
+   longDescription:
+     "Tybeau est un écosystème web et mobile sur lequel j'interviens de bout en bout : interfaces client, API métier, données, paiements, notifications, automatisations, application mobile et mise en production. Le frontend web et les applications mobiles consomment une API backend distincte regroupant la logique métier.",
+ 
+   website: "https://tybeau.fr",
+ 
+   role:
+     "Développement Full-Stack Web & Mobile",
+ 
+   images: [
+     {
+       src: "/projects/tybeau/home.png",
+       label: "Accueil",
+       alt: "Page d'accueil de la plateforme Tybeau",
+     },
+     {
+       src: "/projects/tybeau/search.png",
+       label: "Recherche",
+       alt: "Recherche de professionnels sur Tybeau",
+     },
+     {
+       src: "/projects/tybeau/establishment.png",
+       label: "Établissement",
+       alt: "Fiche d'un établissement sur Tybeau",
+     },
+     {
+       src: "/projects/tybeau/booking.png",
+       label: "Réservation",
+       alt: "Parcours de réservation sur Tybeau",
+     },
+     {
+       src: "/projects/tybeau/payment.png",
+       label: "Paiement",
+       alt: "Paiement intégré au parcours Tybeau",
+     },
+   ],
+ 
+   technologies: [
+     {
+       name: "HTML5",
+       category: "Langages",
+       usage:
+         "Structure sémantique des interfaces web publiques.",
+     },
+     {
+       name: "CSS",
+       category: "Langages",
+       usage:
+         "Styles spécifiques, responsive et finitions graphiques.",
+     },
+     {
+       name: "JavaScript",
+       category: "Langages",
+       usage:
+         "Fondation de l'écosystème frontend et Node.js.",
+     },
+     {
+       name: "TypeScript",
+       category: "Langages",
+       usage:
+         "Langage principal partagé entre les interfaces et le backend.",
+     },
+ 
+     {
+       name: "React",
+       category: "Frontend",
+       usage:
+         "Construction des composants et interfaces interactives.",
+     },
+     {
+       name: "Next.js",
+       category: "Frontend",
+       usage:
+         "Application web client, routing et rendu des pages publiques.",
+     },
+     {
+       name: "Tailwind CSS",
+       category: "Frontend",
+       usage:
+         "Construction rapide d'interfaces responsives et cohérentes.",
+     },
+     {
+       name: "Ant Design",
+       category: "Frontend",
+       usage:
+         "Composants avancés pour certaines interfaces fonctionnelles.",
+     },
+ 
+     {
+       name: "React Native",
+       category: "Mobile",
+       usage:
+         "Développement de l'application cliente mobile.",
+     },
+     {
+       name: "Expo",
+       category: "Mobile",
+       usage:
+         "Builds et gestion des versions Android et iOS.",
+     },
+ 
+     {
+       name: "Node.js",
+       category: "Backend",
+       usage:
+         "Runtime de l'API et des traitements serveur.",
+     },
+     {
+       name: "NestJS",
+       category: "Backend",
+       usage:
+         "API REST et logique métier : utilisateurs, établissements, prestations, rendez-vous, paiements et notifications.",
+     },
+ 
+     {
+       name: "Prisma",
+       category: "Data",
+       usage:
+         "ORM typé entre l'application NestJS et PostgreSQL.",
+     },
+     {
+       name: "PostgreSQL",
+       category: "Data",
+       usage:
+         "Stockage relationnel des données métier de la plateforme.",
+     },
+ 
+     {
+       name: "GitHub",
+       category: "Cloud & DevOps",
+       usage:
+         "Gestion du code source, historique et collaboration.",
+     },
+     {
+       name: "GitHub Actions",
+       category: "Cloud & DevOps",
+       usage:
+         "Automatisation de workflows de CI/CD et de déploiement.",
+     },
+     {
+       name: "Vercel",
+       category: "Cloud & DevOps",
+       usage:
+         "Déploiement continu du frontend Next.js.",
+     },
+     {
+       name: "AWS Lightsail",
+       category: "Cloud & DevOps",
+       usage:
+         "Hébergement de l'API backend et de l'infrastructure de données.",
+     },
+     {
+       name: "AWS S3",
+       category: "Cloud & DevOps",
+       usage:
+         "Stockage des fichiers et ressources applicatives.",
+     },
+     {
+       name: "AWS SES",
+       category: "Cloud & DevOps",
+       usage:
+         "Envoi des e-mails applicatifs et transactionnels.",
+     },
+     {
+       name: "Nginx",
+       category: "Cloud & DevOps",
+       usage:
+         "Reverse proxy et exposition HTTPS du backend.",
+     },
+     {
+       name: "PM2",
+       category: "Cloud & DevOps",
+       usage:
+         "Gestion des processus Node.js sur le serveur.",
+     },
+ 
+     {
+       name: "Stripe",
+       category: "Paiement & intégrations",
+       usage:
+         "Paiements intégrés au parcours de réservation.",
+     },
+     {
+       name: "Stripe Connect",
+       category: "Paiement & intégrations",
+       usage:
+         "Gestion des flux financiers associés aux professionnels.",
+     },
+     {
+       name: "SMSmode",
+       category: "Paiement & intégrations",
+       usage:
+         "Envoi de SMS et rappels liés aux rendez-vous.",
+     },
+     {
+       name: "OAuth / Social Login",
+       category: "Paiement & intégrations",
+       usage:
+         "Connexion via Google, Facebook et Apple.",
+     },
+     {
+       name: "CRON / tâches planifiées",
+       category: "Paiement & intégrations",
+       usage:
+         "Automatisation des rappels et traitements déclenchés à des horaires définis.",
+     },
+ 
+     {
+       name: "Trello",
+       category: "Organisation",
+       usage:
+         "Organisation des tâches et suivi des développements.",
+     },
+     {
+       name: "Postman",
+       category: "Organisation",
+       usage:
+         "Test et validation des endpoints de l'API.",
+     },
+ 
+     {
+       name: "ChatGPT",
+       category: "IA & création",
+       usage:
+         "Assistance ponctuelle pour recherche technique, revue et accélération de certaines tâches de développement.",
+     },
+   ],
+ 
+   features: [
+     "Recherche de professionnels et prestations",
+     "Réservation et gestion des rendez-vous",
+     "Application mobile client",
+     "Authentification Google, Facebook et Apple",
+     "Gestion des utilisateurs et rôles",
+     "Paiements Stripe et Stripe Connect",
+     "Paiements complets et acomptes",
+     "Notifications push",
+     "SMS et e-mails",
+     "Automatisations CRON",
+     "Internationalisation FR / EN / AR",
+     "Déploiements web et mobile",
+   ],
+ 
+   missions: [
+     {
+       title: "Développement Full-Stack",
+       description:
+         "Évolution d'un produit réel sur l'ensemble de sa chaîne technique, du frontend jusqu'au backend et aux données.",
+       details: [
+         "Interfaces Next.js et React",
+         "API REST NestJS",
+         "Modèles Prisma",
+         "PostgreSQL",
+         "Intégrations externes",
+       ],
+     },
+     {
+       title: "Parcours de réservation",
+       description:
+         "Développement du parcours reliant recherche, prestation, disponibilité et rendez-vous.",
+       details: [
+         "Établissements et prestations",
+         "Horaires et indisponibilités",
+         "Création des rendez-vous",
+         "Lieu et adresse",
+         "Suivi du statut",
+       ],
+     },
+     {
+       title: "Paiements",
+       description:
+         "Implémentation de plusieurs modes de paiement selon la configuration des prestations.",
+       details: [
+         "Stripe",
+         "Stripe Connect",
+         "Paiement complet",
+         "Acompte fixe",
+         "Acompte en pourcentage",
+       ],
+     },
+     {
+       title: "Notifications & automatisations",
+       description:
+         "Automatisation des communications autour des rendez-vous.",
+       details: [
+         "SMS",
+         "Push",
+         "E-mails",
+         "CRON",
+         "Rappels",
+         "Demande d'avis après rendez-vous",
+       ],
+     },
+     {
+       title: "Mobile",
+       description:
+         "Développement et maintenance de l'application cliente React Native.",
+       details: [
+         "React Native",
+         "Expo",
+         "Android",
+         "iOS",
+         "Authentifications sociales",
+       ],
+     },
+     {
+       title: "Production",
+       description:
+         "Participation au déploiement, à l'hébergement et à l'exploitation du produit.",
+       details: [
+         "Vercel",
+         "AWS Lightsail",
+         "S3",
+         "SES",
+         "Nginx",
+         "PM2",
+         "GitHub Actions",
+       ],
+     },
+   ],
+ 
+   architecture: {
+     title:
+       "Architecture frontend / backend découplée",
+ 
+     description:
+       "Le frontend Next.js et l'application mobile consomment une API REST NestJS distincte. Cette séparation permet de centraliser la logique métier côté backend et de la réutiliser depuis plusieurs clients.",
+ 
+     layers: [
+       "Next.js / React — frontend web",
+       "React Native / Expo — application mobile",
+       "API REST NestJS / Node.js",
+       "Prisma — couche d'accès aux données",
+       "PostgreSQL — base relationnelle",
+       "AWS S3 / SES et services externes",
+     ],
+   },
+ 
+   security: [
+     "Contrôle d'accès par rôles et permissions.",
+     "Séparation des clients web/mobile et de l'API métier.",
+     "Authentification Google, Facebook et Apple.",
+     "Secrets backend et clés de services conservés côté serveur.",
+     "Paiements sensibles délégués à Stripe.",
+     "Communications publiques protégées par HTTPS.",
+   ],
+ 
+   seo: [
+     "Pages publiques servies via Next.js.",
+     "Structure HTML sémantique et responsive.",
+     "Gestion des métadonnées des pages publiques.",
+     "Optimisation des médias et du chargement côté frontend.",
+     "Internationalisation des interfaces publiques.",
+   ],
+ 
+   theme: {
+     background:
+       "linear-gradient(135deg, #ffffff 0%, #faf9f6 58%, #f3ecdc 100%)",
+ 
+     surface:
+       "rgba(255, 255, 255, 0.76)",
+ 
+     accent: "#CDAA58",
+     accentSecondary: "#D6B25E",
+ 
+     text: "#151515",
+     muted: "#706858",
+ 
+     headingFont: "montserrat",
+   },
+ };
+ 
+ 
+ /* ============================================================
+    TYBEAU PRO
+    ============================================================ */
+ 
+ const tybeauPro: PortfolioProject = {
+   slug: "tybeau-pro",
+ 
+   name: "Tybeau Pro",
+ 
+   eyebrow:
+     "Application professionnelle · Web & Mobile",
+ 
+   logo:
+     "/projects/tybeau-pro/logo.png",
+ 
+   description:
+     "Interface métier destinée aux établissements, managers et collaborateurs de l'écosystème Tybeau.",
+ 
+   longDescription:
+     "Tybeau Pro constitue la partie métier de l'écosystème Tybeau. Le produit centralise établissements, collaborateurs, clients, prestations, agenda, permissions, administration, communications et paiements. Il comprend une application web ainsi qu'une application mobile professionnelle.",
+ 
+   website:
+     "https://pro.tybeau.fr",
+ 
+   role:
+     "Développement Full-Stack Web & Mobile",
+ 
+   images: [
+     {
+       src:
+         "/projects/tybeau-pro/dashboard.png",
+       label: "Dashboard",
+       alt:
+         "Dashboard principal de Tybeau Pro",
+     },
+     {
+       src:
+         "/projects/tybeau-pro/establishment.png",
+       label: "Établissement",
+       alt:
+         "Gestion d'un établissement dans Tybeau Pro",
+     },
+     {
+       src:
+         "/projects/tybeau-pro/collaborators.png",
+       label: "Collaborateurs",
+       alt:
+         "Gestion des collaborateurs dans Tybeau Pro",
+     },
+     {
+       src:
+         "/projects/tybeau-pro/sms.png",
+       label: "Campagnes SMS",
+       alt:
+         "Gestion des campagnes SMS dans Tybeau Pro",
+     },
+     {
+       src:
+         "/projects/tybeau-pro/admin-users.png",
+       label: "Administration",
+       alt:
+         "Administration des utilisateurs de Tybeau Pro",
+     },
+     {
+       src:
+         "/projects/tybeau-pro/validation.png",
+       label: "Validation",
+       alt:
+         "Validation des produits dans Tybeau Pro",
+     },
+   ],
+ 
+   technologies: [
+     {
+       name: "HTML5",
+       category: "Langages",
+       usage:
+         "Structure des interfaces web.",
+     },
+     {
+       name: "CSS",
+       category: "Langages",
+       usage:
+         "Styles métier, responsive et identité graphique.",
+     },
+     {
+       name: "JavaScript",
+       category: "Langages",
+       usage:
+         "Fondation de l'écosystème frontend et Node.js.",
+     },
+     {
+       name: "TypeScript",
+       category: "Langages",
+       usage:
+         "Langage principal côté web, mobile et backend.",
+     },
+ 
+     {
+       name: "React",
+       category: "Frontend",
+       usage:
+         "Construction des interfaces professionnelles.",
+     },
+     {
+       name: "Next.js",
+       category: "Frontend",
+       usage:
+         "Application web Pro et zones d'administration.",
+     },
+     {
+       name: "Tailwind CSS",
+       category: "Frontend",
+       usage:
+         "Mise en forme responsive et composants visuels.",
+     },
+     {
+       name: "Ant Design",
+       category: "Frontend",
+       usage:
+         "Tables, formulaires et composants métier complexes.",
+     },
+ 
+     {
+       name: "React Native",
+       category: "Mobile",
+       usage:
+         "Application mobile destinée aux professionnels.",
+     },
+     {
+       name: "Expo",
+       category: "Mobile",
+       usage:
+         "Toolchain mobile, builds et livraison Android / iOS.",
+     },
+ 
+     {
+       name: "Node.js",
+       category: "Backend",
+       usage:
+         "Runtime de l'API.",
+     },
+     {
+       name: "NestJS",
+       category: "Backend",
+       usage:
+         "API métier, permissions, agenda, utilisateurs, produits, paiements et administration.",
+     },
+ 
+     {
+       name: "Prisma",
+       category: "Data",
+       usage:
+         "Accès typé aux données métier.",
+     },
+     {
+       name: "PostgreSQL",
+       category: "Data",
+       usage:
+         "Base relationnelle de l'écosystème.",
+     },
+ 
+     {
+       name: "GitHub",
+       category: "Cloud & DevOps",
+       usage:
+         "Gestion du code source.",
+     },
+     {
+       name: "GitHub Actions",
+       category: "Cloud & DevOps",
+       usage:
+         "CI/CD et automatisation de déploiements.",
+     },
+     {
+       name: "Vercel",
+       category: "Cloud & DevOps",
+       usage:
+         "Déploiement du frontend Next.js.",
+     },
+     {
+       name: "AWS Lightsail",
+       category: "Cloud & DevOps",
+       usage:
+         "Hébergement backend et infrastructure de données.",
+     },
+     {
+       name: "AWS S3",
+       category: "Cloud & DevOps",
+       usage:
+         "Stockage des fichiers.",
+     },
+     {
+       name: "AWS SES",
+       category: "Cloud & DevOps",
+       usage:
+         "E-mails applicatifs et transactionnels.",
+     },
+     {
+       name: "Nginx",
+       category: "Cloud & DevOps",
+       usage:
+         "Reverse proxy du backend.",
+     },
+     {
+       name: "PM2",
+       category: "Cloud & DevOps",
+       usage:
+         "Gestion des processus Node.js.",
+     },
+ 
+     {
+       name: "Stripe",
+       category:
+         "Paiement & intégrations",
+       usage:
+         "Paiements des prestations.",
+     },
+     {
+       name: "Stripe Connect",
+       category:
+         "Paiement & intégrations",
+       usage:
+         "Gestion des comptes et flux professionnels.",
+     },
+     {
+       name: "Stripe Terminal",
+       category:
+         "Paiement & intégrations",
+       usage:
+         "Intégration du paiement physique dans le produit Pro.",
+     },
+     {
+       name: "Tap to Pay",
+       category:
+         "Paiement & intégrations",
+       usage:
+         "Travaux d'intégration du paiement sans terminal matériel sur iPhone.",
+     },
+     {
+       name: "SMSmode",
+       category:
+         "Paiement & intégrations",
+       usage:
+         "Campagnes et communications SMS.",
+     },
+     {
+       name:
+         "CRON / tâches planifiées",
+       category:
+         "Paiement & intégrations",
+       usage:
+         "Rappels et traitements automatisés.",
+     },
+ 
+     {
+       name: "Trello",
+       category: "Organisation",
+       usage:
+         "Suivi du développement et organisation des fonctionnalités.",
+     },
+     {
+       name: "Postman",
+       category: "Organisation",
+       usage:
+         "Tests de l'API et des intégrations backend.",
+     },
+ 
+     {
+       name: "ChatGPT",
+       category: "IA & création",
+       usage:
+         "Assistance ponctuelle de développement et recherche technique.",
+     },
+     {
+       name: "Emergent",
+       category: "IA & création",
+       usage:
+         "Assistance générative utilisée ponctuellement sur certains développements, notamment autour du mobile.",
+     },
+   ],
+ 
+   features: [
+     "Gestion des établissements",
+     "Gestion des collaborateurs et clients",
+     "Agenda et rendez-vous",
+     "Prestations et produits",
+     "Permissions par rôles",
+     "Espaces Owner, Manager, Pro, Admin et Commercial",
+     "Paiements et acomptes",
+     "Stripe Connect",
+     "Stripe Terminal / Tap to Pay",
+     "Campagnes SMS",
+     "Notifications",
+     "Application Android / iOS",
+     "Administration et validation",
+   ],
+ 
+   missions: [
+     {
+       title: "Interfaces métier",
+       description:
+         "Développement des écrans opérationnels utilisés par les établissements et collaborateurs.",
+       details: [
+         "Dashboards",
+         "Clients",
+         "Collaborateurs",
+         "Prestations",
+         "Produits",
+         "Établissements",
+       ],
+     },
+     {
+       title: "Rôles & permissions",
+       description:
+         "Mise en place de règles d'accès adaptées aux différents profils métier.",
+       details: [
+         "OWNER",
+         "MANAGER",
+         "PRO",
+         "ADMIN",
+         "COMMERCIAL",
+         "Permissions granulaires",
+       ],
+     },
+     {
+       title: "Agenda & rendez-vous",
+       description:
+         "Gestion des opérations quotidiennes autour de la réservation.",
+       details: [
+         "Agenda",
+         "Disponibilités",
+         "Absences",
+         "Clients",
+         "Prestations",
+         "Notifications",
+       ],
+     },
+     {
+       title: "Paiement physique et en ligne",
+       description:
+         "Intégration de plusieurs parcours de paiement à destination des professionnels.",
+       details: [
+         "Stripe",
+         "Stripe Connect",
+         "Paiement complet",
+         "Acompte",
+         "Stripe Terminal",
+         "Tap to Pay",
+       ],
+     },
+     {
+       title: "Administration",
+       description:
+         "Développement de fonctions internes de gestion et de validation de la plateforme.",
+       details: [
+         "Utilisateurs",
+         "Établissements",
+         "Collaborateurs",
+         "Produits",
+         "Catégories",
+         "Validation",
+       ],
+     },
+     {
+       title: "Mobile & stores",
+       description:
+         "Participation au cycle de développement et de publication de l'application Pro.",
+       details: [
+         "React Native",
+         "Expo",
+         "Android",
+         "iOS",
+         "Builds",
+         "Préparation stores",
+       ],
+     },
+   ],
+ 
+   architecture: {
+     title:
+       "Architecture web / mobile / API découplée",
+ 
+     description:
+       "Le frontend Next.js et l'application React Native utilisent une API NestJS commune. La logique métier, les permissions et les intégrations sensibles restent concentrées côté backend.",
+ 
+     layers: [
+       "Next.js / React — interface web professionnelle",
+       "React Native / Expo — application mobile Pro",
+       "API REST NestJS",
+       "Prisma",
+       "PostgreSQL",
+       "AWS S3 / SES",
+       "Stripe / Stripe Connect / Terminal",
+     ],
+   },
+ 
+   security: [
+     "Contrôle d'accès par rôles et permissions granulaires.",
+     "Route guards adaptés aux profils métier.",
+     "Séparation claire entre fonctions Owner, Admin et Commercial.",
+     "Secrets Stripe et traitements de paiement conservés côté backend.",
+     "API séparée des clients web et mobile.",
+     "Communications HTTPS.",
+   ],
+ 
+   seo: [
+     "Application principalement métier et authentifiée : l'indexation n'est pas l'objectif central.",
+     "Priorité à la performance des interfaces, au responsive et à la bonne séparation des espaces privés.",
+     "Pages publiques et ressources de présentation compatibles avec l'écosystème Next.js.",
+   ],
+ 
+   theme: {
+     background:
+       "radial-gradient(circle at 82% 20%, rgba(205,170,88,.13), transparent 30%), linear-gradient(135deg, #070708 0%, #0B0B0C 54%, #141108 100%)",
+ 
+     surface:
+       "rgba(16, 15, 12, 0.78)",
+ 
+     accent: "#CDAA58",
+     accentSecondary: "#D6B25E",
+ 
+     text: "#FFFFFF",
+     muted: "#AAA292",
+ 
+     headingFont: "poppins",
+   },
+ };
+ 
+ 
+ /* ============================================================
+    MYRENDEV
+    ============================================================ */
+ 
+ const myrendev: PortfolioProject = {
+   slug: "myrendev",
+ 
+   name: "MyRendev",
+ 
+   eyebrow:
+     "Gestion de rendez-vous · Application métier",
+ 
+   logo:
+     "/projects/myrendev/logo.png",
+ 
+   description:
+     "Application métier de gestion de rendez-vous, utilisateurs, interventions, communications et automatisations.",
+ 
+   longDescription:
+     "MyRendev est une application complète développée autour d'un frontend Next.js et d'une API NestJS séparée. J'y ai travaillé sur les fonctionnalités métier, les utilisateurs et permissions, les communications, le stockage cloud, la sécurité applicative et la mise en production.",
+ 
+   website:
+     "https://myrendev.fr",
+ 
+   role:
+     "Développement Full-Stack & pilotage technique",
+ 
+   images: [
+     {
+       src:
+         "/projects/myrendev/landing.png",
+       label: "Présentation",
+       alt: "Landing page de MyRendev",
+     },
+     {
+       src:
+         "/projects/myrendev/dashboard.png",
+       label: "Dashboard",
+       alt: "Dashboard MyRendev",
+     },
+     {
+       src:
+         "/projects/myrendev/appointment.png",
+       label: "Rendez-vous",
+       alt:
+         "Création d'un rendez-vous MyRendev",
+     },
+     {
+       src:
+         "/projects/myrendev/interventions.png",
+       label: "Interventions",
+       alt:
+         "Gestion des interventions MyRendev",
+     },
+     {
+       src:
+         "/projects/myrendev/sms.png",
+       label: "Campagnes SMS",
+       alt:
+         "Campagnes SMS MyRendev",
+     },
+     {
+       src:
+         "/projects/myrendev/billing.png",
+       label: "Facturation",
+       alt:
+         "Options de facturation MyRendev",
+     },
+   ],
+ 
+   technologies: [
+     {
+       name: "HTML5",
+       category: "Langages",
+       usage:
+         "Structure des interfaces web.",
+     },
+     {
+       name: "CSS",
+       category: "Langages",
+       usage:
+         "Styles et adaptations responsives.",
+     },
+     {
+       name: "JavaScript",
+       category: "Langages",
+       usage:
+         "Écosystème web et runtime frontend.",
+     },
+     {
+       name: "TypeScript",
+       category: "Langages",
+       usage:
+         "Langage principal frontend et backend.",
+     },
+ 
+     {
+       name: "React",
+       category: "Frontend",
+       usage:
+         "Interfaces métier.",
+     },
+     {
+       name: "Next.js",
+       category: "Frontend",
+       usage:
+         "Application frontend principale.",
+     },
+     {
+       name: "Tailwind CSS",
+       category: "Frontend",
+       usage:
+         "Construction et responsive des interfaces.",
+     },
+     {
+       name: "Ant Design",
+       category: "Frontend",
+       usage:
+         "Composants métier complexes : formulaires, tableaux et contrôles.",
+     },
+ 
+     {
+       name: "Node.js",
+       category: "Backend",
+       usage:
+         "Runtime du backend.",
+     },
+     {
+       name: "NestJS",
+       category: "Backend",
+       usage:
+         "API REST, authentification et logique métier.",
+     },
+ 
+     {
+       name: "Prisma",
+       category: "Data",
+       usage:
+         "Accès typé à la base de données.",
+     },
+     {
+       name: "PostgreSQL",
+       category: "Data",
+       usage:
+         "Persistance des données métier.",
+     },
+ 
+     {
+       name: "GitHub",
+       category: "Cloud & DevOps",
+       usage:
+         "Gestion du code source.",
+     },
+     {
+       name: "GitHub Actions",
+       category: "Cloud & DevOps",
+       usage:
+         "CI/CD et déploiements automatisés.",
+     },
+     {
+       name: "Vercel",
+       category: "Cloud & DevOps",
+       usage:
+         "Hébergement du frontend Next.js.",
+     },
+     {
+       name: "AWS Lightsail",
+       category: "Cloud & DevOps",
+       usage:
+         "Hébergement du backend et des données.",
+     },
+     {
+       name: "AWS S3",
+       category: "Cloud & DevOps",
+       usage:
+         "Stockage des fichiers et génération d'URLs pré-signées.",
+     },
+     {
+       name: "AWS SES",
+       category: "Cloud & DevOps",
+       usage:
+         "Envoi des e-mails transactionnels.",
+     },
+     {
+       name: "Nginx",
+       category: "Cloud & DevOps",
+       usage:
+         "Reverse proxy et terminaison HTTPS.",
+     },
+     {
+       name: "PM2",
+       category: "Cloud & DevOps",
+       usage:
+         "Gestion du processus backend Node.js.",
+     },
+ 
+     {
+       name: "SMSmode",
+       category:
+         "Paiement & intégrations",
+       usage:
+         "Campagnes et communications SMS.",
+     },
+     {
+       name:
+         "CRON / tâches planifiées",
+       category:
+         "Paiement & intégrations",
+       usage:
+         "Automatisation de traitements métier.",
+     },
+ 
+     {
+       name: "Trello",
+       category: "Organisation",
+       usage:
+         "Organisation du développement et suivi des tâches.",
+     },
+     {
+       name: "Postman",
+       category: "Organisation",
+       usage:
+         "Tests de l'API REST.",
+     },
+ 
+     {
+       name: "ChatGPT",
+       category: "IA & création",
+       usage:
+         "Assistance ponctuelle au développement et à la recherche technique.",
+     },
+   ],
+ 
+   features: [
+     "Rendez-vous",
+     "Clients et collaborateurs",
+     "Interventions",
+     "Authentification et rôles",
+     "Permissions",
+     "Absences",
+     "Stocks",
+     "Facturation",
+     "Campagnes SMS",
+     "E-mails",
+     "Stockage S3",
+     "Dashboards",
+     "Automatisations",
+   ],
+ 
+   missions: [
+     {
+       title: "Architecture Full-Stack",
+       description:
+         "Développement d'une architecture frontend/API séparée.",
+       details: [
+         "Next.js",
+         "NestJS",
+         "Prisma",
+         "PostgreSQL",
+       ],
+     },
+     {
+       title: "Modules métier",
+       description:
+         "Développement des fonctionnalités utilisées pour gérer l'activité quotidienne.",
+       details: [
+         "Clients",
+         "Collaborateurs",
+         "Rendez-vous",
+         "Interventions",
+         "Absences",
+         "Stocks",
+         "Permissions",
+       ],
+     },
+     {
+       title: "Communications",
+       description:
+         "Centralisation des communications transactionnelles et campagnes.",
+       details: [
+         "SMSmode",
+         "AWS SES",
+         "Campagnes SMS",
+         "E-mails",
+         "Automatisations",
+       ],
+     },
+     {
+       title: "Fichiers & cloud",
+       description:
+         "Externalisation du stockage de fichiers vers AWS.",
+       details: [
+         "AWS S3",
+         "Uploads",
+         "URLs pré-signées",
+         "Séparation stockage / serveur",
+       ],
+     },
+     {
+       title: "Déploiement & sécurité",
+       description:
+         "Mise en production et durcissement de l'application.",
+       details: [
+         "Lightsail",
+         "Nginx",
+         "PM2",
+         "HTTPS",
+         "HSTS",
+         "CORS",
+         "GitHub Actions",
+       ],
+     },
+   ],
+ 
+   architecture: {
+     title:
+       "Architecture frontend / API découplée",
+ 
+     description:
+       "Le frontend Next.js est déployé séparément du backend NestJS. Le backend centralise l'authentification, les règles métier, les intégrations AWS et l'accès à PostgreSQL.",
+ 
+     layers: [
+       "Next.js / React — frontend",
+       "API REST NestJS / Node.js",
+       "Prisma",
+       "PostgreSQL",
+       "AWS S3 / SES",
+       "Nginx / PM2",
+     ],
+   },
+ 
+   security: [
+     "Authentification JWT avec expiration.",
+     "Protection des routes et contrôle d'accès par rôles.",
+     "CORS limité aux origines autorisées.",
+     "HTTPS / TLS via Nginx.",
+     "Durcissement HSTS.",
+     "URLs pré-signées pour les fichiers stockés dans S3.",
+     "Secrets et variables sensibles conservés côté serveur.",
+   ],
+ 
+   seo: [
+     "Frontend Next.js.",
+     "Structure HTML sémantique.",
+     "Pages responsives.",
+     "Gestion des métadonnées publiques.",
+     "Séparation entre espaces publics et interfaces métier.",
+   ],
+ 
+   theme: {
+     background:
+       "radial-gradient(circle at 18% 28%, rgba(56,189,248,.12), transparent 32%), linear-gradient(135deg, #07121A 0%, #071822 60%, #041016 100%)",
+ 
+     surface:
+       "rgba(7, 23, 32, 0.72)",
+ 
+     accent: "#38BDF8",
+     accentSecondary: "#22D3EE",
+ 
+     text: "#FFFFFF",
+     muted: "#94A9B6",
+ 
+     headingFont: "poppins",
+   },
+ };
+ 
+ 
+ /* ============================================================
+    SPECTRAL
+    ============================================================ */
+ 
+ const spectral: PortfolioProject = {
+   slug: "spectral",
+ 
+   name: "Spectral",
+ 
+   eyebrow:
+     "Projet personnel · Univers interactif",
+ 
+   logo:
+     "/projects/spectral/logo.png",
+ 
+   description:
+     "Plateforme consacrée à un univers Dark Fantasy original, avec encyclopédie interactive, personnages, factions et contenu narratif.",
+ 
+   longDescription:
+     "Spectral est mon projet personnel orienté produit, frontend et UI/UX. Il me sert à expérimenter des interfaces riches, un design system complet, de nombreux contenus liés, des systèmes de recherche et filtrage ainsi qu'un back-office séparé, le tout avec une architecture frontend / API découplée.",
+ 
+   website:
+     "https://spectralunivers.com",
+ 
+   role:
+     "Conception, développement & direction artistique",
+ 
+   images: [
+     {
+       src:
+         "/projects/spectral/home.png",
+       label: "Accueil",
+       alt:
+         "Page d'accueil de Spectral",
+     },
+     {
+       src:
+         "/projects/spectral/univers.png",
+       label: "Univers",
+       alt:
+         "Exploration de l'univers Spectral",
+     },
+     {
+       src:
+         "/projects/spectral/units.png",
+       label: "Encyclopédie",
+       alt:
+         "Encyclopédie Spectral",
+     },
+     {
+       src:
+         "/projects/spectral/unit-detail.png",
+       label: "Fiche détaillée",
+       alt:
+         "Fiche d'une unité Spectral",
+     },
+     {
+       src:
+         "/projects/spectral/dashboard.png",
+       label: "Back-office",
+       alt:
+         "Dashboard d'administration Spectral",
+     },
+   ],
+ 
+   technologies: [
+     {
+       name: "HTML5",
+       category: "Langages",
+       usage:
+         "Structure sémantique des interfaces publiques.",
+     },
+     {
+       name: "CSS",
+       category: "Langages",
+       usage:
+         "Effets visuels spécifiques, néons, transparence et responsive.",
+     },
+     {
+       name: "JavaScript",
+       category: "Langages",
+       usage:
+         "Écosystème web.",
+     },
+     {
+       name: "TypeScript",
+       category: "Langages",
+       usage:
+         "Typage du frontend et des structures applicatives.",
+     },
+ 
+     {
+       name: "React",
+       category: "Frontend",
+       usage:
+         "Composants interactifs et architecture UI.",
+     },
+     {
+       name: "Next.js",
+       category: "Frontend",
+       usage:
+         "Frontend public, routing et rendu des pages.",
+     },
+     {
+       name: "Tailwind CSS",
+       category: "Frontend",
+       usage:
+         "Design system, responsive et construction des interfaces.",
+     },
+     {
+       name: "Ant Design",
+       category: "Frontend",
+       usage:
+         "Composants avancés utilisés notamment dans les interfaces de gestion.",
+     },
+ 
+     {
+       name: "Node.js",
+       category: "Backend",
+       usage:
+         "Runtime backend.",
+     },
+     {
+       name: "NestJS",
+       category: "Backend",
+       usage:
+         "API du projet et logique du back-office.",
+     },
+ 
+     {
+       name: "Prisma",
+       category: "Data",
+       usage:
+         "Accès typé aux données.",
+     },
+     {
+       name: "PostgreSQL",
+       category: "Data",
+       usage:
+         "Persistance des personnages, unités, classes, relations et contenus.",
+     },
+ 
+     {
+       name: "GitHub",
+       category: "Cloud & DevOps",
+       usage:
+         "Gestion du dépôt et de l'historique du projet.",
+     },
+     {
+       name: "GitHub Actions",
+       category: "Cloud & DevOps",
+       usage:
+         "Automatisation de tâches et déploiements.",
+     },
+     {
+       name: "Vercel",
+       category: "Cloud & DevOps",
+       usage:
+         "Hébergement du frontend Next.js.",
+     },
+     {
+       name: "AWS Lightsail",
+       category: "Cloud & DevOps",
+       usage:
+         "Hébergement du backend et de la base.",
+     },
+     {
+       name: "AWS S3",
+       category: "Cloud & DevOps",
+       usage:
+         "Stockage des médias et fichiers.",
+     },
+     {
+       name: "AWS SES",
+       category: "Cloud & DevOps",
+       usage:
+         "Envoi d'e-mails applicatifs.",
+     },
+     {
+       name: "Docker",
+       category: "Cloud & DevOps",
+       usage:
+         "Conteneurisation de composants de l'environnement backend.",
+     },
+     {
+       name: "Nginx",
+       category: "Cloud & DevOps",
+       usage:
+         "Reverse proxy et exposition du backend.",
+     },
+ 
+     {
+       name:
+         "Google Analytics",
+       category: "Analytics & SEO",
+       usage:
+         "Analyse du trafic et des usages du site public.",
+     },
+ 
+     {
+       name: "Trello",
+       category: "Organisation",
+       usage:
+         "Organisation et suivi du projet personnel.",
+     },
+ 
+     {
+       name: "ChatGPT",
+       category: "IA & création",
+       usage:
+         "Assistance ponctuelle pour développement, recherche et structuration.",
+     },
+     {
+       name: "Midjourney",
+       category: "IA & création",
+       usage:
+         "Création de certains visuels servant à illustrer l'univers.",
+     },
+   ],
+ 
+   features: [
+     "Encyclopédie interactive",
+     "Fiches personnages et unités",
+     "Classes et factions",
+     "Recherche textuelle",
+     "Filtres dynamiques",
+     "Relations entre contenus",
+     "Galeries",
+     "Back-office",
+     "Design system personnalisé",
+     "Responsive design",
+   ],
+ 
+   missions: [
+     {
+       title:
+         "Direction artistique & UI",
+       description:
+         "Création de l'identité visuelle complète du projet.",
+       details: [
+         "Design system",
+         "Glassmorphism",
+         "Néons",
+         "Palettes par faction",
+         "Responsive",
+       ],
+     },
+     {
+       title:
+         "Encyclopédie interactive",
+       description:
+         "Conception d'une interface permettant d'explorer de nombreux contenus liés.",
+       details: [
+         "Personnages",
+         "Unités",
+         "Classes",
+         "Factions",
+         "Relations",
+       ],
+     },
+     {
+       title:
+         "Recherche & filtres",
+       description:
+         "Création d'outils pour parcourir efficacement le contenu.",
+       details: [
+         "Recherche",
+         "Filtres",
+         "Catégories",
+         "Navigation",
+         "Cartes dynamiques",
+       ],
+     },
+     {
+       title: "Back-office",
+       description:
+         "Séparation entre la consultation publique et l'administration des contenus.",
+       details: [
+         "Dashboard",
+         "Gestion des entrées",
+         "Administration",
+         "API dédiée",
+       ],
+     },
+     {
+       title: "Déploiement",
+       description:
+         "Mise en production d'une architecture web découplée.",
+       details: [
+         "Vercel",
+         "Lightsail",
+         "Docker",
+         "Nginx",
+         "GitHub Actions",
+       ],
+     },
+   ],
+ 
+   architecture: {
+     title:
+       "Architecture frontend / API découplée",
+ 
+     description:
+       "Le site public Next.js est séparé du backend et du stockage des données. Cette organisation permet de faire évoluer indépendamment l'expérience publique et les fonctions de gestion.",
+ 
+     layers: [
+       "Next.js / React — expérience publique",
+       "Interface de gestion",
+       "API NestJS",
+       "Prisma",
+       "PostgreSQL",
+       "AWS S3 / SES",
+       "Docker / Nginx",
+     ],
+   },
+ 
+   security: [
+     "HTTPS sur les services publics.",
+     "Séparation frontend / API.",
+     "Séparation entre espace public et fonctions d'administration.",
+     "Secrets backend conservés côté serveur.",
+     "Base PostgreSQL non exposée directement au frontend.",
+   ],
+ 
+   seo: [
+     "Frontend Next.js destiné à des pages publiques indexables.",
+     "Structure sémantique des contenus.",
+     "Responsive design.",
+     "Gestion des métadonnées de pages.",
+     "Optimisation des médias.",
+     "Google Analytics pour l'analyse du trafic.",
+   ],
+ 
+   theme: {
+     background:
+       "radial-gradient(circle at 15% 20%, rgba(0,230,230,.14), transparent 30%), radial-gradient(circle at 85% 70%, rgba(192,0,255,.14), transparent 30%), #020506",
+ 
+     surface:
+       "rgba(2, 8, 10, 0.72)",
+ 
+     accent: "#00E6E6",
+     accentSecondary: "#C000FF",
+ 
+     text: "#FFFFFF",
+     muted: "#8C9A9E",
+ 
+     headingFont: "oxanium",
+   },
+ };
+ 
+ 
+ /* ============================================================
+    COGESSUR
+    ============================================================ */
+ 
+ const cogessur: PortfolioProject = {
+   slug: "cogessur",
+ 
+   name: "Cogessur",
+ 
+   eyebrow:
+     "Site corporate · WordPress",
+ 
+   logo:
+     "/projects/cogessur/logo.webp",
+ 
+   description:
+     "Site vitrine réalisé au début de mon parcours professionnel pour un cabinet de courtage en assurances.",
+ 
+   longDescription:
+     "Cogessur fait partie de mes premières réalisations professionnelles. Le projet consistait à construire un site WordPress présentant le cabinet, ses différentes offres d'assurance, ses actualités et ses parcours de contact.",
+ 
+   website:
+     "https://www.cogessur.com",
+ 
+   period:
+     "Première année d'alternance",
+ 
+   role:
+     "Développement & intégration WordPress",
+ 
+   images: [
+     {
+       src:
+         "/projects/cogessur/home.png",
+       label: "Accueil",
+       alt:
+         "Page d'accueil Cogessur",
+     },
+     {
+       src:
+         "/projects/cogessur/insurance.png",
+       label: "Assurances",
+       alt:
+         "Présentation des offres Cogessur",
+     },
+     {
+       src:
+         "/projects/cogessur/about.png",
+       label: "Le cabinet",
+       alt:
+         "Présentation du cabinet Cogessur",
+     },
+     {
+       src:
+         "/projects/cogessur/news.png",
+       label: "Actualités",
+       alt:
+         "Actualités Cogessur",
+     },
+     {
+       src:
+         "/projects/cogessur/contact.png",
+       label: "Contact",
+       alt:
+         "Page contact Cogessur",
+     },
+     {
+       src:
+         "/projects/cogessur/claim.png",
+       label: "Réclamation",
+       alt:
+         "Formulaire de réclamation Cogessur",
+     },
+   ],
+ 
+   technologies: [
+     {
+       name: "WordPress",
+       category: "CMS",
+       usage:
+         "CMS principal utilisé pour structurer et administrer le site.",
+     },
+     {
+       name: "PHP",
+       category: "Langages",
+       usage:
+         "Technologie backend de l'environnement WordPress.",
+     },
+     {
+       name: "HTML5",
+       category: "Langages",
+       usage:
+         "Structure des pages.",
+     },
+     {
+       name: "CSS",
+       category: "Langages",
+       usage:
+         "Mise en forme et responsive.",
+     },
+     {
+       name: "JavaScript",
+       category: "Langages",
+       usage:
+         "Interactions côté navigateur.",
+     },
+     {
+       name:
+         "Google Analytics",
+       category:
+         "Analytics & SEO",
+       usage:
+         "Mesure du trafic et analyse de la fréquentation du site.",
+     },
+     {
+       name: "Trello",
+       category: "Organisation",
+       usage:
+         "Organisation et suivi des tâches du projet.",
+     },
+     {
+       name: "ChatGPT",
+       category: "IA & création",
+       usage:
+         "Outil d'assistance utilisé ponctuellement dans mon travail.",
+     },
+   ],
+ 
+   features: [
+     "Site vitrine responsive",
+     "Présentation des assurances",
+     "Parcours particuliers",
+     "Parcours professionnels",
+     "Pages éditoriales",
+     "Actualités",
+     "Formulaires",
+     "Réclamations",
+   ],
+ 
+   missions: [
+     {
+       title: "Intégration WordPress",
+       description:
+         "Construction et organisation des différentes pages du site.",
+       details: [
+         "Structure",
+         "Navigation",
+         "Pages",
+         "Intégration graphique",
+       ],
+     },
+     {
+       title:
+         "Présentation des offres",
+       description:
+         "Organisation des contenus afin de rendre les offres du cabinet accessibles aux visiteurs.",
+       details: [
+         "Particuliers",
+         "Professionnels",
+         "Contenus",
+         "Actualités",
+       ],
+     },
+     {
+       title: "Formulaires",
+       description:
+         "Intégration des différents parcours de contact.",
+       details: [
+         "Contact",
+         "Demande d'information",
+         "Réclamation",
+       ],
+     },
+     {
+       title: "Responsive",
+       description:
+         "Adaptation des interfaces aux différents écrans.",
+       details: [
+         "Desktop",
+         "Tablette",
+         "Mobile",
+       ],
+     },
+   ],
+ 
+   architecture: {
+     title:
+       "Architecture WordPress",
+ 
+     description:
+       "Contrairement aux autres projets du portfolio, Cogessur repose sur une architecture CMS WordPress traditionnelle dans laquelle présentation, administration du contenu et backend sont intégrés au même environnement.",
+ 
+     layers: [
+       "WordPress",
+       "PHP",
+       "Templates HTML",
+       "CSS / JavaScript",
+       "Contenus administrables",
+     ],
+   },
+ 
+   security: [
+     "Site servi via HTTPS.",
+     "Administration séparée de la consultation publique grâce au fonctionnement WordPress.",
+   ],
+ 
+   seo: [
+     "Organisation éditoriale des pages et contenus.",
+     "Structure HTML adaptée au site vitrine.",
+     "Responsive design.",
+     "Google Analytics pour le suivi du trafic.",
+     "Pages dédiées aux différentes offres d'assurance.",
+   ],
+ 
+   theme: {
+     background:
+       "radial-gradient(circle at 85% 24%, rgba(36,116,154,.12), transparent 30%), linear-gradient(135deg, #F8FAFC 0%, #EEF4F8 100%)",
+ 
+     surface:
+       "rgba(255, 255, 255, 0.8)",
+ 
+     accent: "#24749A",
+     accentSecondary: "#102D40",
+ 
+     text: "#10212C",
+     muted: "#687985",
+ 
+     headingFont: "poppins",
+   },
+ };
+ 
+ 
+ /* ============================================================
+    EXPORT
+    ============================================================ */
+ 
+ export const projects:
+   readonly PortfolioProject[] = [
+     tybeau,
+     tybeauPro,
+     myrendev,
+     spectral,
+     cogessur,
+   ];
+ 
+ 
+ export function getProjectBySlug(
+   slug: string,
+ ): PortfolioProject | undefined {
+   return projects.find(
+     (project) =>
+       project.slug === slug,
+   );
+ }
