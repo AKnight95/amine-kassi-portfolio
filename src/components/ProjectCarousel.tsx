@@ -2,9 +2,7 @@
 
 "use client";
 
-import type {
-  CSSProperties,
-} from "react";
+import type { CSSProperties } from "react";
 
 import {
   useCallback,
@@ -26,8 +24,12 @@ import {
   ImageIcon,
 } from "lucide-react";
 
+import type {
+  ProjectImage,
+} from "@/data/portfolio";
+
 type ProjectCarouselProps = {
-  images: readonly string[];
+  images: readonly ProjectImage[];
   projectName: string;
   accent: string;
 };
@@ -56,10 +58,7 @@ export default function ProjectCarousel({
     images.length > 1;
 
   /**
-   * Affiche la capture précédente.
-   *
-   * Lorsque l'on se trouve sur la première capture,
-   * le carousel repart automatiquement sur la dernière.
+   * Navigation vers la capture précédente.
    */
   const previous = useCallback(() => {
     if (!hasMultipleImages) {
@@ -77,10 +76,7 @@ export default function ProjectCarousel({
   ]);
 
   /**
-   * Affiche la capture suivante.
-   *
-   * Lorsque l'on arrive à la dernière capture,
-   * le carousel repart au début.
+   * Navigation vers la capture suivante.
    */
   const next = useCallback(() => {
     if (!hasMultipleImages) {
@@ -98,13 +94,10 @@ export default function ProjectCarousel({
   ]);
 
   /**
-   * Autoplay.
+   * Défilement automatique.
    *
-   * Il est automatiquement désactivé :
-   * - lorsque l'utilisateur survole le carousel ;
-   * - lorsque le carousel possède le focus ;
-   * - lorsqu'il n'y a qu'une seule capture ;
-   * - si l'utilisateur préfère réduire les animations.
+   * Il s'arrête lorsque l'utilisateur interagit avec
+   * le carousel ou préfère limiter les animations.
    */
   useEffect(() => {
     if (
@@ -132,9 +125,8 @@ export default function ProjectCarousel({
   ]);
 
   /**
-   * Aucun screenshot :
-   * on garde malgré tout une zone propre
-   * plutôt que d'afficher une image cassée.
+   * Placeholder de sécurité si un projet
+   * n'a temporairement aucune capture.
    */
   if (!hasImages) {
     return (
@@ -154,18 +146,13 @@ export default function ProjectCarousel({
           />
 
           <span>
-            Captures du projet à ajouter
+            Captures à venir
           </span>
         </div>
       </div>
     );
   }
 
-  /*
-   * Les images sont des données statiques venant
-   * de portfolio.ts. currentIndex reste donc toujours
-   * dans les limites du tableau grâce à previous()/next().
-   */
   const currentImage =
     images[currentIndex];
 
@@ -178,6 +165,9 @@ export default function ProjectCarousel({
             accent,
         } as CSSProperties
       }
+      role="region"
+      aria-label={`Galerie du projet ${projectName}`}
+      tabIndex={0}
       onMouseEnter={() =>
         setIsPaused(true)
       }
@@ -190,60 +180,56 @@ export default function ProjectCarousel({
       onBlurCapture={() =>
         setIsPaused(false)
       }
-    >
-      {/* ======================================================
-          ARRIÈRE-PLAN FLOUTÉ
+      onKeyDown={(event) => {
+        if (
+          event.key === "ArrowLeft"
+        ) {
+          previous();
+        }
 
-          La capture courante est réutilisée comme décor.
-          Cela évite d'avoir de grandes bandes vides lorsque
-          le ratio du screenshot diffère de celui du carousel.
-      ======================================================= */}
+        if (
+          event.key === "ArrowRight"
+        ) {
+          next();
+        }
+      }}
+    >
+      {/* Arrière-plan flouté reprenant la capture courante. */}
       <AnimatePresence
         mode="popLayout"
         initial={false}
       >
         <motion.div
-          key={`background-${currentImage}`}
+          key={`background-${currentImage.src}`}
           className="absolute inset-0"
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          exit={{
-            opacity: 0,
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{
             duration: 0.4,
           }}
         >
           <Image
-            src={currentImage}
+            src={currentImage.src}
             alt=""
             fill
-            sizes="(max-width: 1024px) 100vw, 55vw"
+            sizes="(max-width: 1024px) 100vw, 65vw"
             className="scale-110 object-cover opacity-25 blur-2xl"
             aria-hidden="true"
           />
 
-          <div className="absolute inset-0 bg-black/45" />
+          <div className="absolute inset-0 bg-black/50" />
         </motion.div>
       </AnimatePresence>
 
-      {/* ======================================================
-          CAPTURE PRINCIPALE
-
-          object-contain permet de conserver l'intégralité
-          des dashboards sans les rogner.
-      ======================================================= */}
-      <div className="absolute inset-4 z-10 overflow-hidden rounded-[1.15rem] md:inset-5">
+      {/* Capture principale, affichée sans rognage. */}
+      <div className="absolute inset-4 z-10 overflow-hidden rounded-[1.2rem] md:inset-5">
         <AnimatePresence
           mode="wait"
           initial={false}
         >
           <motion.div
-            key={currentImage}
+            key={currentImage.src}
             className="absolute inset-0"
             initial={
               prefersReducedMotion
@@ -283,11 +269,7 @@ export default function ProjectCarousel({
             }}
           >
             <motion.div
-              className="
-                relative h-full w-full
-                cursor-grab
-                active:cursor-grabbing
-              "
+              className="relative h-full w-full cursor-grab active:cursor-grabbing"
               drag={
                 hasMultipleImages
                   ? "x"
@@ -319,12 +301,10 @@ export default function ProjectCarousel({
               }}
             >
               <Image
-                src={currentImage}
-                alt={`${projectName} — capture ${
-                  currentIndex + 1
-                } sur ${images.length}`}
+                src={currentImage.src}
+                alt={currentImage.alt}
                 fill
-                sizes="(max-width: 1024px) 100vw, 55vw"
+                sizes="(max-width: 1024px) 100vw, 65vw"
                 className="select-none object-contain"
                 draggable={false}
               />
@@ -333,59 +313,59 @@ export default function ProjectCarousel({
         </AnimatePresence>
       </div>
 
-      {/* Dégradé assurant la lisibilité des contrôles. */}
+      {/* Ombre assurant la lisibilité des contrôles. */}
       <div
         aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute inset-0 z-20
-          bg-gradient-to-t
-          from-black/60
-          via-transparent
-          to-black/10
-        "
+        className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-black/70 via-transparent to-black/10"
       />
 
-      {/* ======================================================
-          NAVIGATION PRÉCÉDENT / SUIVANT
-      ======================================================= */}
+      {/* Navigation précédente / suivante. */}
       {hasMultipleImages && (
         <>
           <button
             type="button"
             onClick={previous}
-            aria-label={`Afficher la capture précédente de ${projectName}`}
+            aria-label={`Capture précédente de ${projectName}`}
             className="project-carousel-arrow left-4 md:left-5"
           >
             <ChevronLeft
               aria-hidden="true"
-              size={19}
+              size={20}
             />
           </button>
 
           <button
             type="button"
             onClick={next}
-            aria-label={`Afficher la capture suivante de ${projectName}`}
+            aria-label={`Capture suivante de ${projectName}`}
             className="project-carousel-arrow right-4 md:right-5"
           >
             <ChevronRight
               aria-hidden="true"
-              size={19}
+              size={20}
             />
           </button>
         </>
       )}
 
-      {/* ======================================================
-          INDICATEURS DE PAGINATION
-      ======================================================= */}
+      {/* Nom de la vue affichée. */}
+      <div
+        className="project-carousel-caption"
+        aria-live="polite"
+      >
+        <span>
+          {projectName}
+        </span>
+
+        <strong>
+          {currentImage.label}
+        </strong>
+      </div>
+
+      {/* Pagination. */}
       {hasMultipleImages && (
         <div
-          className="
-            absolute bottom-5 left-5 z-30
-            flex items-center gap-2
-          "
+          className="project-carousel-pagination"
           aria-label={`Navigation des captures de ${projectName}`}
         >
           {images.map(
@@ -399,26 +379,20 @@ export default function ProjectCarousel({
 
               return (
                 <button
-                  key={image}
+                  key={image.src}
                   type="button"
                   onClick={() =>
                     setCurrentIndex(
                       index,
                     )
                   }
-                  aria-label={`Afficher la capture ${
-                    index + 1
-                  } de ${projectName}`}
+                  aria-label={`Afficher ${image.label}`}
                   aria-current={
                     isActive
                       ? "true"
                       : undefined
                   }
-                  className="
-                    h-1.5 rounded-full
-                    transition-all
-                    duration-300
-                  "
+                  className="project-carousel-dot"
                   style={{
                     width: isActive
                       ? 30
@@ -427,7 +401,7 @@ export default function ProjectCarousel({
                     backgroundColor:
                       isActive
                         ? accent
-                        : "rgba(255, 255, 255, 0.35)",
+                        : "rgba(255,255,255,.35)",
 
                     boxShadow:
                       isActive
@@ -441,30 +415,13 @@ export default function ProjectCarousel({
         </div>
       )}
 
-      {/* ======================================================
-          COMPTEUR
-      ======================================================= */}
-      <div
-        className="
-          absolute bottom-5 right-5 z-30
-          rounded-lg
-          border border-white/10
-          bg-black/45
-          px-3 py-2
-          font-display
-          text-[0.62rem]
-          tracking-[0.14em]
-          text-white/65
-          backdrop-blur-md
-        "
-      >
+      {/* Compteur. */}
+      <div className="project-carousel-counter">
         {String(
           currentIndex + 1,
         ).padStart(2, "0")}
 
-        <span className="mx-1.5 text-white/25">
-          /
-        </span>
+        <span>/</span>
 
         {String(
           images.length,

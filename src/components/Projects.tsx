@@ -1,3 +1,5 @@
+// src/components/Projects.tsx
+
 import ProjectShowcase from "@/components/ProjectShowcase";
 import Reveal from "@/components/motion/Reveal";
 
@@ -11,6 +13,7 @@ export default function Projects() {
       id="projects"
       className="scroll-mt-24"
     >
+      {/* Introduction générale aux réalisations. */}
       <div className="site-container py-28 md:py-36">
         <Reveal>
           <p className="section-kicker">
@@ -25,25 +28,24 @@ export default function Projects() {
           </h2>
 
           <p className="mt-5 max-w-2xl text-base leading-8 text-white/45">
-            Chaque produit possède ses propres
-            contraintes, technologies et identité
-            visuelle.
+            Une sélection de produits web
+            et mobiles sur lesquels
+            j&apos;ai travaillé, chacun avec
+            ses propres contraintes
+            techniques, fonctionnelles et
+            graphiques.
           </p>
         </Reveal>
       </div>
 
-      <div>
+      <div className="projects-showcase-list">
         {projects.map(
           (project, index) => (
-            <Reveal
+            <ProjectShowcase
               key={project.slug}
-              y={20}
-            >
-              <ProjectShowcase
-                project={project}
-                index={index}
-              />
-            </Reveal>
+              project={project}
+              index={index}
+            />
           ),
         )}
       </div>

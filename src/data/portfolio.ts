@@ -1,8 +1,8 @@
 // src/data/portfolio.ts
 
 /**
- * Polices disponibles pour adapter visuellement chaque projet
- * à son identité graphique.
+ * Polices disponibles pour restituer l'identité
+ * graphique propre à chaque projet.
  */
 export type ProjectHeadingFont =
   | "oxanium"
@@ -10,10 +10,22 @@ export type ProjectHeadingFont =
   | "montserrat";
 
 /**
- * Identité visuelle propre à chaque projet.
+ * Capture d'un projet.
  *
- * Ces valeurs permettent au composant ProjectShowcase
- * de changer automatiquement de couleurs selon le produit.
+ * Le label est affiché dans le carousel tandis que
+ * le texte alternatif améliore l'accessibilité.
+ */
+export type ProjectImage = {
+  src: string;
+  label: string;
+  alt: string;
+};
+
+/**
+ * Identité visuelle d'un projet.
+ *
+ * Les composants de présentation récupèrent ces valeurs
+ * sous forme de variables CSS.
  */
 export type ProjectTheme = {
   background: string;
@@ -29,16 +41,18 @@ export type ProjectTheme = {
 };
 
 /**
- * Structure commune utilisée par :
- * - la homepage ;
+ * Modèle commun utilisé sur :
+ * - la page d'accueil ;
  * - les carousels ;
- * - les pages détaillées /projects/[slug].
+ * - les futures études de cas /projects/[slug].
  */
 export type PortfolioProject = {
   slug: string;
 
   name: string;
   eyebrow: string;
+
+  logo: string;
 
   description: string;
   longDescription: string;
@@ -48,7 +62,7 @@ export type PortfolioProject = {
   period?: string;
   role: string;
 
-  images: readonly string[];
+  images: readonly ProjectImage[];
 
   technologies: readonly string[];
   features: readonly string[];
@@ -57,10 +71,8 @@ export type PortfolioProject = {
 };
 
 /**
- * Projets présentés dans le portfolio.
- *
- * L'ordre correspond volontairement à leur pertinence
- * pour une candidature Full-Stack en 2026.
+ * Les projets sont classés selon leur pertinence
+ * pour mon profil Full-Stack actuel.
  */
 export const projects: readonly PortfolioProject[] = [
   // ============================================================
@@ -74,6 +86,8 @@ export const projects: readonly PortfolioProject[] = [
 
     eyebrow: "Marketplace beauté · Web & Mobile",
 
+    logo: "/projects/tybeau/logo.png",
+
     description:
       "Plateforme destinée aux clients pour découvrir des professionnels, consulter leurs prestations et réserver des rendez-vous beauté.",
 
@@ -85,11 +99,31 @@ export const projects: readonly PortfolioProject[] = [
     role: "Développement Full-Stack Web & Mobile",
 
     images: [
-      "/projects/tybeau/home.png",
-      "/projects/tybeau/search.png",
-      "/projects/tybeau/establishment.png",
-      "/projects/tybeau/booking.png",
-      "/projects/tybeau/payment.png",
+      {
+        src: "/projects/tybeau/home.png",
+        label: "Accueil",
+        alt: "Page d'accueil de la plateforme Tybeau",
+      },
+      {
+        src: "/projects/tybeau/search.png",
+        label: "Recherche",
+        alt: "Interface de recherche de professionnels sur Tybeau",
+      },
+      {
+        src: "/projects/tybeau/establishment.png",
+        label: "Établissement",
+        alt: "Fiche d'un établissement professionnel sur Tybeau",
+      },
+      {
+        src: "/projects/tybeau/booking.png",
+        label: "Réservation",
+        alt: "Parcours de réservation d'une prestation sur Tybeau",
+      },
+      {
+        src: "/projects/tybeau/payment.png",
+        label: "Paiement",
+        alt: "Interface de paiement Stripe intégrée à Tybeau",
+      },
     ],
 
     technologies: [
@@ -112,23 +146,21 @@ export const projects: readonly PortfolioProject[] = [
     features: [
       "Recherche de professionnels et prestations",
       "Réservation et gestion des rendez-vous",
-      "Application mobile client avec React Native / Expo",
+      "Application mobile client avec React Native et Expo",
       "Authentification Google, Facebook et Apple",
-      "Gestion des comptes et rôles",
+      "Gestion des comptes, rôles et permissions",
       "Paiements Stripe et Stripe Connect",
       "Paiements complets et acomptes",
-      "Notifications push",
-      "E-mails transactionnels",
-      "Envoi de SMS",
+      "Notifications push, e-mails et SMS",
       "Tâches automatisées et CRON",
       "Internationalisation FR / EN / AR",
-      "Stockage et services AWS",
+      "Services et stockage AWS",
       "CI/CD et déploiements automatisés",
     ],
 
     theme: {
       background:
-        "linear-gradient(135deg, #ffffff 0%, #faf9f6 58%, #f4efe3 100%)",
+        "linear-gradient(135deg, #ffffff 0%, #faf9f6 58%, #f3ecdc 100%)",
 
       surface: "rgba(255, 255, 255, 0.76)",
 
@@ -136,7 +168,7 @@ export const projects: readonly PortfolioProject[] = [
       accentSecondary: "#D6B25E",
 
       text: "#151515",
-      muted: "#6B6455",
+      muted: "#706858",
 
       headingFont: "montserrat",
     },
@@ -153,6 +185,8 @@ export const projects: readonly PortfolioProject[] = [
 
     eyebrow: "Application professionnelle · Web & Mobile",
 
+    logo: "/projects/tybeau-pro/logo.png",
+
     description:
       "Interface métier destinée aux établissements, managers et collaborateurs de l'écosystème Tybeau.",
 
@@ -164,12 +198,36 @@ export const projects: readonly PortfolioProject[] = [
     role: "Développement Full-Stack Web & Mobile",
 
     images: [
-      "/projects/tybeau-pro/dashboard.png",
-      "/projects/tybeau-pro/establishment.png",
-      "/projects/tybeau-pro/collaborators.png",
-      "/projects/tybeau-pro/sms.png",
-      "/projects/tybeau-pro/admin-users.png",
-      "/projects/tybeau-pro/validation.png",
+      {
+        src: "/projects/tybeau-pro/dashboard.png",
+        label: "Dashboard",
+        alt: "Tableau de bord principal de Tybeau Pro",
+      },
+      {
+        src: "/projects/tybeau-pro/establishment.png",
+        label: "Établissement",
+        alt: "Interface de gestion d'un établissement dans Tybeau Pro",
+      },
+      {
+        src: "/projects/tybeau-pro/collaborators.png",
+        label: "Collaborateurs",
+        alt: "Gestion des collaborateurs dans Tybeau Pro",
+      },
+      {
+        src: "/projects/tybeau-pro/sms.png",
+        label: "Campagnes SMS",
+        alt: "Gestion des campagnes SMS dans Tybeau Pro",
+      },
+      {
+        src: "/projects/tybeau-pro/admin-users.png",
+        label: "Administration",
+        alt: "Interface d'administration des utilisateurs de Tybeau Pro",
+      },
+      {
+        src: "/projects/tybeau-pro/validation.png",
+        label: "Validation",
+        alt: "Interface de validation de produits dans Tybeau Pro",
+      },
     ],
 
     technologies: [
@@ -195,20 +253,20 @@ export const projects: readonly PortfolioProject[] = [
       "Agenda et rendez-vous",
       "Gestion des prestations et produits",
       "Rôles et permissions métier",
-      "Espaces Owner, Manager, Admin et Commercial",
+      "Espaces Owner, Manager, Pro, Admin et Commercial",
       "Paiements complets et acomptes",
       "Stripe Connect",
       "Intégration Stripe Terminal / Tap to Pay",
-      "Campagnes et notifications SMS",
+      "Campagnes SMS et notifications",
       "Notifications push et e-mails",
-      "Applications Android et iOS avec Expo",
+      "Builds et déploiements mobiles Android / iOS",
       "Administration et validation des contenus",
       "Déploiement et exploitation en production",
     ],
 
     theme: {
       background:
-        "linear-gradient(135deg, #080809 0%, #0B0B0C 55%, #11100D 100%)",
+        "radial-gradient(circle at 82% 20%, rgba(205,170,88,.13), transparent 30%), linear-gradient(135deg, #070708 0%, #0B0B0C 54%, #141108 100%)",
 
       surface: "rgba(16, 15, 12, 0.78)",
 
@@ -233,6 +291,8 @@ export const projects: readonly PortfolioProject[] = [
 
     eyebrow: "Gestion de rendez-vous · Application métier",
 
+    logo: "/projects/myrendev/logo.png",
+
     description:
       "Application métier de gestion de rendez-vous, utilisateurs, interventions, communications et automatisations.",
 
@@ -244,12 +304,36 @@ export const projects: readonly PortfolioProject[] = [
     role: "Développement Full-Stack & pilotage technique",
 
     images: [
-      "/projects/myrendev/landing.png",
-      "/projects/myrendev/dashboard.png",
-      "/projects/myrendev/appointment.png",
-      "/projects/myrendev/interventions.png",
-      "/projects/myrendev/sms.png",
-      "/projects/myrendev/billing.png",
+      {
+        src: "/projects/myrendev/landing.png",
+        label: "Présentation",
+        alt: "Landing page de MyRendev",
+      },
+      {
+        src: "/projects/myrendev/dashboard.png",
+        label: "Dashboard",
+        alt: "Tableau de bord principal de MyRendev",
+      },
+      {
+        src: "/projects/myrendev/appointment.png",
+        label: "Rendez-vous",
+        alt: "Création d'un rendez-vous dans MyRendev",
+      },
+      {
+        src: "/projects/myrendev/interventions.png",
+        label: "Interventions",
+        alt: "Tableau de bord des interventions MyRendev",
+      },
+      {
+        src: "/projects/myrendev/sms.png",
+        label: "Campagnes SMS",
+        alt: "Interface des campagnes SMS MyRendev",
+      },
+      {
+        src: "/projects/myrendev/billing.png",
+        label: "Facturation",
+        alt: "Paramètres de facturation de MyRendev",
+      },
     ],
 
     technologies: [
@@ -288,7 +372,7 @@ export const projects: readonly PortfolioProject[] = [
 
     theme: {
       background:
-        "linear-gradient(135deg, #07121A 0%, #071822 60%, #041016 100%)",
+        "radial-gradient(circle at 18% 28%, rgba(56,189,248,.12), transparent 32%), linear-gradient(135deg, #07121A 0%, #071822 60%, #041016 100%)",
 
       surface: "rgba(7, 23, 32, 0.72)",
 
@@ -313,22 +397,44 @@ export const projects: readonly PortfolioProject[] = [
 
     eyebrow: "Projet personnel · Univers interactif",
 
+    logo: "/projects/spectral/logo.png",
+
     description:
       "Plateforme consacrée à un univers Dark Fantasy original, avec encyclopédie interactive, personnages, factions et contenu narratif.",
 
     longDescription:
-      "Spectral est mon projet personnel orienté développement frontend et UI/UX. Il me permet d'expérimenter des interfaces riches, une identité graphique complète, des composants dynamiques, des recherches et filtres, ainsi qu'un back-office permettant de structurer le contenu de l'univers.",
+      "Spectral est mon projet personnel orienté développement frontend et UI/UX. Il me permet d'expérimenter des interfaces riches, une identité graphique complète, des composants dynamiques, des recherches et filtres ainsi qu'un back-office permettant de structurer le contenu de l'univers.",
 
     website: "https://spectralunivers.com",
 
     role: "Conception, développement & direction artistique",
 
     images: [
-      "/projects/spectral/home.png",
-      "/projects/spectral/univers.png",
-      "/projects/spectral/units.png",
-      "/projects/spectral/unit-detail.png",
-      "/projects/spectral/dashboard.png",
+      {
+        src: "/projects/spectral/home.png",
+        label: "Accueil",
+        alt: "Page d'accueil de Spectral The Age of Iron",
+      },
+      {
+        src: "/projects/spectral/univers.png",
+        label: "Univers",
+        alt: "Présentation des factions et classes de l'univers Spectral",
+      },
+      {
+        src: "/projects/spectral/units.png",
+        label: "Encyclopédie",
+        alt: "Encyclopédie et moteur de recherche de Spectral",
+      },
+      {
+        src: "/projects/spectral/unit-detail.png",
+        label: "Fiche détaillée",
+        alt: "Fiche détaillée d'une unité dans Spectral",
+      },
+      {
+        src: "/projects/spectral/dashboard.png",
+        label: "Back-office",
+        alt: "Interface d'administration du projet Spectral",
+      },
     ],
 
     technologies: [
@@ -336,7 +442,6 @@ export const projects: readonly PortfolioProject[] = [
       "React",
       "Next.js",
       "Tailwind CSS",
-      "Framer Motion",
     ],
 
     features: [
@@ -348,13 +453,12 @@ export const projects: readonly PortfolioProject[] = [
       "Galeries d'images",
       "Back-office de gestion",
       "Design system personnalisé",
-      "Animations et transitions",
       "Responsive design",
     ],
 
     theme: {
       background:
-        "radial-gradient(circle at 15% 20%, rgba(0, 230, 230, 0.13), transparent 30%), radial-gradient(circle at 85% 70%, rgba(192, 0, 255, 0.13), transparent 30%), #020506",
+        "radial-gradient(circle at 15% 20%, rgba(0,230,230,.14), transparent 30%), radial-gradient(circle at 85% 70%, rgba(192,0,255,.14), transparent 30%), #020506",
 
       surface: "rgba(2, 8, 10, 0.72)",
 
@@ -379,6 +483,8 @@ export const projects: readonly PortfolioProject[] = [
 
     eyebrow: "Site corporate · WordPress",
 
+    logo: "/projects/cogessur/logo.webp",
+
     description:
       "Site vitrine réalisé au début de mon parcours professionnel pour un cabinet de courtage en assurances.",
 
@@ -392,12 +498,36 @@ export const projects: readonly PortfolioProject[] = [
     role: "Développement & intégration WordPress",
 
     images: [
-      "/projects/cogessur/home.png",
-      "/projects/cogessur/insurance.png",
-      "/projects/cogessur/about.png",
-      "/projects/cogessur/news.png",
-      "/projects/cogessur/contact.png",
-      "/projects/cogessur/claim.png",
+      {
+        src: "/projects/cogessur/home.png",
+        label: "Accueil",
+        alt: "Page d'accueil du site Cogessur",
+      },
+      {
+        src: "/projects/cogessur/insurance.png",
+        label: "Assurances",
+        alt: "Présentation des assurances pour particuliers sur Cogessur",
+      },
+      {
+        src: "/projects/cogessur/about.png",
+        label: "Le cabinet",
+        alt: "Page de présentation du cabinet Cogessur",
+      },
+      {
+        src: "/projects/cogessur/news.png",
+        label: "Actualités",
+        alt: "Section actualités du site Cogessur",
+      },
+      {
+        src: "/projects/cogessur/contact.png",
+        label: "Contact",
+        alt: "Page de contact du site Cogessur",
+      },
+      {
+        src: "/projects/cogessur/claim.png",
+        label: "Réclamation",
+        alt: "Formulaire de réclamation du site Cogessur",
+      },
     ],
 
     technologies: [
@@ -421,9 +551,9 @@ export const projects: readonly PortfolioProject[] = [
 
     theme: {
       background:
-        "linear-gradient(135deg, #F8FAFC 0%, #EEF4F8 100%)",
+        "radial-gradient(circle at 85% 24%, rgba(36,116,154,.12), transparent 30%), linear-gradient(135deg, #F8FAFC 0%, #EEF4F8 100%)",
 
-      surface: "rgba(255, 255, 255, 0.78)",
+      surface: "rgba(255, 255, 255, 0.8)",
 
       accent: "#24749A",
       accentSecondary: "#102D40",
@@ -437,10 +567,7 @@ export const projects: readonly PortfolioProject[] = [
 ] as const;
 
 /**
- * Recherche un projet à partir de son slug.
- *
- * Utilisé principalement par la route dynamique :
- * /projects/[slug]
+ * Retourne un projet correspondant au slug demandé.
  */
 export function getProjectBySlug(
   slug: string,
