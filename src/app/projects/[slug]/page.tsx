@@ -1,7 +1,14 @@
+// src/app/projects/[slug]/page.tsx
+
 import type {
+    CSSProperties,
+  } from "react";
+  
+  import type {
     Metadata,
   } from "next";
   
+  import Image from "next/image";
   import Link from "next/link";
   
   import {
@@ -13,31 +20,45 @@ import type {
     notFound,
   } from "next/navigation";
   
-  import Header from "@/components/Header";
+  import Header
+    from "@/components/Header";
   
-  import ProjectCarousel from "@/components/ProjectCarousel";
+  import ProjectCarousel
+    from "@/components/ProjectCarousel";
+  
+  import TechnologyGrid
+    from "@/components/TechnologyGrid";
+  
+  import Reveal
+    from "@/components/motion/Reveal";
   
   import {
     getProjectBySlug,
     projects,
   } from "@/data/portfolio";
   
-  type Props = {
+  
+  type ProjectPageProps = {
     params: Promise<{
       slug: string;
     }>;
   };
   
+  
   export function generateStaticParams() {
-    return projects.map((project) => ({
-      slug: project.slug,
-    }));
+    return projects.map(
+      (project) => ({
+        slug: project.slug,
+      }),
+    );
   }
+  
   
   export async function generateMetadata({
     params,
-  }: Props): Promise<Metadata> {
-    const { slug } = await params;
+  }: ProjectPageProps): Promise<Metadata> {
+    const { slug } =
+      await params;
   
     const project =
       getProjectBySlug(slug);
@@ -47,188 +68,442 @@ import type {
     }
   
     return {
-      title: project.name,
+      title:
+        `${project.name} — Projet Full-Stack`,
   
       description:
         project.description,
+  
+      alternates: {
+        canonical:
+          `/projects/${project.slug}`,
+      },
     };
   }
   
+  
   export default async function ProjectPage({
     params,
-  }: Props) {
-    const { slug } = await params;
+  }: ProjectPageProps) {
+    const { slug } =
+      await params;
   
     const project =
       getProjectBySlug(slug);
   
+  
     if (!project) {
       notFound();
     }
+  
+  
+    const projectStyle = {
+      "--project-bg":
+        project.theme.background,
+  
+      "--project-surface":
+        project.theme.surface,
+  
+      "--project-accent":
+        project.theme.accent,
+  
+      "--project-accent-secondary":
+        project.theme
+          .accentSecondary,
+  
+      "--project-text":
+        project.theme.text,
+  
+      "--project-muted":
+        project.theme.muted,
+    } as CSSProperties;
+  
   
     return (
       <>
         <Header />
   
         <main
-          style={{
-            background:
-              project.theme.background,
-  
-            color:
-              project.theme.text,
-          }}
-          className="min-h-screen"
+          className="project-detail"
+          style={projectStyle}
         >
-          <div className="site-container py-16 md:py-24">
-            <Link
-              href="/#projects"
-              className="inline-flex items-center gap-2 text-sm opacity-50 transition hover:opacity-100"
-            >
-              <ArrowLeft size={16} />
+          {/* =====================================================
+              HERO
+          ====================================================== */}
   
-              Retour aux projets
-            </Link>
+          <section className="project-detail-hero">
+            <div
+              aria-hidden="true"
+              className="project-detail-grid"
+            />
   
-            <div className="mt-14 grid gap-14 lg:grid-cols-[.85fr_1.15fr]">
-              <div>
-                <p
-                  className="text-xs font-semibold uppercase tracking-[.18em]"
-                  style={{
-                    color:
-                      project.theme.accent,
-                  }}
-                >
-                  {project.eyebrow}
-                </p>
+            <div className="project-detail-container">
+              <Link
+                href="/#projects"
+                className="project-detail-back"
+              >
+                <ArrowLeft
+                  aria-hidden="true"
+                  size={16}
+                />
   
-                <h1 className="mt-4 font-display text-5xl font-semibold md:text-7xl">
-                  {project.name}
-                  <span
-                    style={{
-                      color:
-                        project.theme.accent,
-                    }}
-                  >
-                    .
-                  </span>
-                </h1>
+                Retour aux projets
+              </Link>
   
-                <p
-                  className="mt-7 max-w-xl text-base leading-8"
-                  style={{
-                    color:
-                      project.theme.muted,
-                  }}
-                >
-                  {project.longDescription}
-                </p>
   
-                <div className="mt-9">
-                  <p className="text-xs uppercase tracking-[.14em] opacity-40">
-                    Mon rôle
-                  </p>
+              <div className="project-detail-hero-grid">
+                <Reveal>
+                  <div>
+                    <Image
+                      src={project.logo}
+                      alt={`Logo ${project.name}`}
+                      width={420}
+                      height={150}
+                      priority
+                      className="project-detail-logo"
+                    />
   
-                  <p className="mt-2 font-medium">
-                    {project.role}
-                  </p>
-                </div>
   
-                <a
-                  href={project.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-brand-button mt-9"
-                  style={
-                    {
-                      "--project-accent":
-                        project.theme.accent,
+                    <p className="project-detail-eyebrow">
+                      {project.eyebrow}
+                    </p>
   
-                      "--project-surface":
-                        project.theme.surface,
   
-                      "--project-text":
-                        project.theme.text,
-                    } as React.CSSProperties
-                  }
-                >
-                  Voir le site
-                  <ExternalLink size={15} />
-                </a>
-              </div>
+                    <h1 className="project-detail-title">
+                      {project.name}
   
-              <ProjectCarousel
-                images={project.images}
-                projectName={project.name}
-                accent={project.theme.accent}
-              />
-            </div>
+                      <span>.</span>
+                    </h1>
   
-            <div className="mt-24 grid gap-14 lg:grid-cols-2">
-              <section>
-                <p
-                  className="text-xs font-semibold uppercase tracking-[.18em]"
-                  style={{
-                    color:
-                      project.theme.accent,
-                  }}
-                >
-                  Fonctionnalités
-                </p>
   
-                <div className="mt-7 space-y-3">
-                  {project.features.map(
-                    (feature) => (
-                      <div
-                        key={feature}
-                        className="flex items-center gap-4 border-b border-current/10 py-3"
-                      >
-                        <span
-                          className="h-1.5 w-1.5 rotate-45"
-                          style={{
-                            background:
-                              project.theme
-                                .accent,
+                    <p className="project-detail-intro">
+                      {
+                        project.longDescription
+                      }
+                    </p>
   
-                            boxShadow: `0 0 8px ${project.theme.accent}`,
-                          }}
-                        />
   
-                        <span>
-                          {feature}
-                        </span>
-                      </div>
-                    ),
-                  )}
-                </div>
-              </section>
-  
-              <section>
-                <p
-                  className="text-xs font-semibold uppercase tracking-[.18em]"
-                  style={{
-                    color:
-                      project.theme.accent,
-                  }}
-                >
-                  Technologies
-                </p>
-  
-                <div className="mt-7 flex flex-wrap gap-3">
-                  {project.technologies.map(
-                    (technology) => (
-                      <span
-                        key={technology}
-                        className="rounded-full border border-current/10 px-4 py-2 text-sm"
-                      >
-                        {technology}
+                    <div className="project-detail-role">
+                      <span>
+                        Mon rôle
                       </span>
-                    ),
-                  )}
-                </div>
-              </section>
+  
+                      <strong>
+                        {project.role}
+                      </strong>
+                    </div>
+  
+  
+                    <a
+                      href={
+                        project.website
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-brand-button mt-8"
+                    >
+                      Voir le site
+  
+                      <ExternalLink
+                        aria-hidden="true"
+                        size={15}
+                      />
+                    </a>
+                  </div>
+                </Reveal>
+  
+  
+                <Reveal delay={0.1}>
+                  <ProjectCarousel
+                    images={
+                      project.images
+                    }
+                    projectName={
+                      project.name
+                    }
+                    accent={
+                      project.theme
+                        .accent
+                    }
+                  />
+                </Reveal>
+              </div>
             </div>
-          </div>
+          </section>
+  
+  
+          {/* =====================================================
+              PÉRIMÈTRE FONCTIONNEL
+          ====================================================== */}
+  
+          <section className="project-detail-section">
+            <div className="project-detail-container">
+              <Reveal>
+                <div className="project-detail-section-heading">
+                  <span>
+                    Le produit
+                  </span>
+  
+                  <h2>
+                    Périmètre fonctionnel
+                    <strong>.</strong>
+                  </h2>
+  
+                  <p>
+                    Les principales
+                    fonctionnalités sur
+                    lesquelles le produit
+                    s&apos;appuie.
+                  </p>
+                </div>
+              </Reveal>
+  
+  
+              <div className="project-scope-grid">
+                {project.features.map(
+                  (
+                    feature,
+                    index,
+                  ) => (
+                    <Reveal
+                      key={feature}
+                      delay={
+                        Math.min(
+                          index * 0.035,
+                          0.2,
+                        )
+                      }
+                    >
+                      <article className="project-scope-card">
+                        <span>
+                          {String(
+                            index + 1,
+                          ).padStart(
+                            2,
+                            "0",
+                          )}
+                        </span>
+  
+                        <p>
+                          {feature}
+                        </p>
+                      </article>
+                    </Reveal>
+                  ),
+                )}
+              </div>
+            </div>
+          </section>
+  
+  
+          {/* =====================================================
+              MISSIONS / CONTRIBUTION
+          ====================================================== */}
+  
+          <section className="project-detail-section project-detail-section--missions">
+            <div className="project-detail-container">
+              <Reveal>
+                <div className="project-detail-section-heading">
+                  <span>
+                    Contribution
+                  </span>
+  
+                  <h2>
+                    Mes missions
+                    <strong>.</strong>
+                  </h2>
+  
+                  <p>
+                    Les principaux axes
+                    techniques et fonctionnels
+                    sur lesquels je suis
+                    intervenu.
+                  </p>
+                </div>
+              </Reveal>
+  
+  
+              <div className="project-missions">
+                {project.missions.map(
+                  (
+                    mission,
+                    index,
+                  ) => (
+                    <Reveal
+                      key={
+                        mission.title
+                      }
+                      y={20}
+                    >
+                      <article className="project-mission">
+                        <div className="project-mission-number">
+                          {String(
+                            index + 1,
+                          ).padStart(
+                            2,
+                            "0",
+                          )}
+                        </div>
+  
+  
+                        <div className="project-mission-content">
+                          <h3>
+                            {
+                              mission.title
+                            }
+                          </h3>
+  
+                          <p>
+                            {
+                              mission.description
+                            }
+                          </p>
+  
+  
+                          <div className="project-mission-details">
+                            {mission.details.map(
+                              (
+                                detail,
+                              ) => (
+                                <span
+                                  key={
+                                    detail
+                                  }
+                                >
+                                  {
+                                    detail
+                                  }
+                                </span>
+                              ),
+                            )}
+                          </div>
+                        </div>
+                      </article>
+                    </Reveal>
+                  ),
+                )}
+              </div>
+            </div>
+          </section>
+  
+  
+          {/* =====================================================
+              STACK TECHNIQUE
+          ====================================================== */}
+  
+          <section className="project-detail-section">
+            <div className="project-detail-container">
+              <Reveal>
+                <div className="project-detail-section-heading">
+                  <span>
+                    Architecture
+                  </span>
+  
+                  <h2>
+                    Technologies utilisées
+                    <strong>.</strong>
+                  </h2>
+  
+                  <p>
+                    Pas uniquement une liste de
+                    technologies : voici leur
+                    rôle concret dans le projet.
+                  </p>
+                </div>
+              </Reveal>
+  
+  
+              <Reveal y={18}>
+                <TechnologyGrid
+                  technologies={
+                    project.technologies
+                  }
+                  accent={
+                    project.theme.accent
+                  }
+                />
+              </Reveal>
+            </div>
+          </section>
+  
+  
+          {/* =====================================================
+              GALERIE
+          ====================================================== */}
+  
+          <section className="project-detail-section project-detail-gallery-section">
+            <div className="project-detail-container">
+              <Reveal>
+                <div className="project-detail-section-heading">
+                  <span>
+                    Interfaces
+                  </span>
+  
+                  <h2>
+                    Aperçus du produit
+                    <strong>.</strong>
+                  </h2>
+                </div>
+              </Reveal>
+  
+  
+              <div className="project-detail-gallery">
+                {project.images.map(
+                  (image) => (
+                    <Reveal
+                      key={
+                        image.src
+                      }
+                      y={16}
+                    >
+                      <figure className="project-detail-gallery-item">
+                        <div className="project-detail-gallery-image">
+                          <Image
+                            src={
+                              image.src
+                            }
+                            alt={
+                              image.alt
+                            }
+                            fill
+                            sizes="(max-width: 900px) 100vw, 50vw"
+                            className="object-contain"
+                          />
+                        </div>
+  
+                        <figcaption>
+                          {
+                            image.label
+                          }
+                        </figcaption>
+                      </figure>
+                    </Reveal>
+                  ),
+                )}
+              </div>
+            </div>
+          </section>
+  
+  
+          {/* =====================================================
+              FOOTER CASE STUDY
+          ====================================================== */}
+  
+          <section className="project-detail-footer">
+            <div className="project-detail-container">
+              <Link
+                href="/#projects"
+                className="project-detail-back project-detail-back--footer"
+              >
+                <ArrowLeft
+                  aria-hidden="true"
+                  size={16}
+                />
+  
+                Voir les autres projets
+              </Link>
+            </div>
+          </section>
         </main>
       </>
     );

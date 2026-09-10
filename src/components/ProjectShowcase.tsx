@@ -13,24 +13,33 @@ import type {
     ExternalLink,
   } from "lucide-react";
   
-  import ProjectCarousel from "@/components/ProjectCarousel";
-  import Reveal from "@/components/motion/Reveal";
+  import ProjectCarousel
+    from "@/components/ProjectCarousel";
+  
+  import Reveal
+    from "@/components/motion/Reveal";
   
   import type {
     PortfolioProject,
   } from "@/data/portfolio";
+  
   
   type ProjectShowcaseProps = {
     project: PortfolioProject;
     index: number;
   };
   
+  
   const headingFontClasses = {
     oxanium: "font-display",
-    poppins: "font-brand-poppins",
+  
+    poppins:
+      "font-brand-poppins",
+  
     montserrat:
       "font-brand-montserrat",
   } as const;
+  
   
   export default function ProjectShowcase({
     project,
@@ -39,19 +48,28 @@ import type {
     const reverse =
       index % 2 !== 0;
   
+    const isSpectral =
+      project.slug === "spectral";
+  
     const sectionNumber =
       String(index + 1).padStart(
         2,
         "0",
       );
   
+  
     return (
       <section
         className={[
           "project-showcase",
+  
           reverse
             ? "project-showcase--reverse"
             : "project-showcase--forward",
+  
+          isSpectral
+            ? "project-showcase--wide"
+            : "",
         ].join(" ")}
         style={
           {
@@ -76,17 +94,37 @@ import type {
           } as CSSProperties
         }
       >
-        {/* Décor de fond. */}
+        {/* Texture de fond */}
         <div
           aria-hidden="true"
           className="project-showcase-grid"
         />
   
+        {/* Halo principal */}
         <div
           aria-hidden="true"
           className="project-showcase-glow"
         />
   
+        {/* Traits lumineux suivant
+            la direction des séparateurs. */}
+        <div
+          aria-hidden="true"
+          className="
+            project-diagonal-line
+            project-diagonal-line--top
+          "
+        />
+  
+        <div
+          aria-hidden="true"
+          className="
+            project-diagonal-line
+            project-diagonal-line--bottom
+          "
+        />
+  
+        {/* Numéro décoratif */}
         <span
           aria-hidden="true"
           className="project-showcase-number"
@@ -94,41 +132,47 @@ import type {
           {sectionNumber}
         </span>
   
+  
         <div
           className={[
             "showcase-container",
-            "grid items-center gap-14",
-            "lg:grid-cols-[0.7fr_1.3fr]",
-            "xl:gap-20",
+            "project-showcase-layout",
+  
             reverse
-              ? "lg:[&>*:first-child]:order-2"
+              ? "project-showcase-layout--reverse"
               : "",
           ].join(" ")}
         >
           {/* =====================================================
-              PRÉSENTATION DU PROJET
+              INFORMATIONS
           ====================================================== */}
+  
           <Reveal
             y={24}
-            className="relative z-10"
+            className="project-showcase-content"
           >
+            {/* Logo libre : aucun fond,
+                aucune bordure. */}
             <div className="project-logo-container">
               <Image
                 src={project.logo}
                 alt={`Logo ${project.name}`}
-                width={280}
-                height={100}
+                width={420}
+                height={150}
                 className="project-logo"
               />
             </div>
+  
   
             <p className="project-showcase-eyebrow">
               {project.eyebrow}
             </p>
   
+  
             <h2
               className={[
                 "project-showcase-title",
+  
                 headingFontClasses[
                   project.theme
                     .headingFont
@@ -136,14 +180,16 @@ import type {
               ].join(" ")}
             >
               {project.name}
+  
               <span>.</span>
             </h2>
+  
   
             <p className="project-showcase-description">
               {project.description}
             </p>
   
-            {/* Mon rôle sur le produit. */}
+  
             <div className="project-role">
               <span>
                 Mon rôle
@@ -154,9 +200,7 @@ import type {
               </strong>
             </div>
   
-            {/* Trois fonctionnalités donnent une idée
-                du périmètre sans transformer l'accueil
-                en page détaillée. */}
+  
             <div className="project-feature-preview">
               {project.features
                 .slice(0, 3)
@@ -179,19 +223,26 @@ import type {
                 ))}
             </div>
   
-            {/* Technologies principales uniquement. */}
+  
             <div className="mt-7 flex flex-wrap gap-2">
               {project.technologies
                 .slice(0, 7)
-                .map((technology) => (
-                  <span
-                    key={technology}
-                    className="project-brand-tag"
-                  >
-                    {technology}
-                  </span>
-                ))}
+                .map(
+                  (technology) => (
+                    <span
+                      key={
+                        technology.name
+                      }
+                      className="project-brand-tag"
+                    >
+                      {
+                        technology.name
+                      }
+                    </span>
+                  ),
+                )}
             </div>
+  
   
             <div className="mt-9 flex flex-wrap items-center gap-5">
               <Link
@@ -205,6 +256,7 @@ import type {
                   size={16}
                 />
               </Link>
+  
   
               <a
                 href={project.website}
@@ -222,16 +274,20 @@ import type {
             </div>
           </Reveal>
   
+  
           {/* =====================================================
-              CAROUSEL PRODUIT
+              SHOWCASE VISUEL
           ====================================================== */}
+  
           <Reveal
             y={24}
             delay={0.08}
-            className="relative z-10"
+            className="project-showcase-media"
           >
             <ProjectCarousel
-              images={project.images}
+              images={
+                project.images
+              }
               projectName={
                 project.name
               }
