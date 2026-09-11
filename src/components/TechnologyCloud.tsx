@@ -63,8 +63,8 @@ import {
   export default function TechnologyCloud() {
     return (
       <section
+        id="technology-cloud"
         className="technology-cloud-section"
-        aria-labelledby="technology-cloud-title"
       >
         <div
           aria-hidden="true"

@@ -1,202 +1,417 @@
+// src/components/Hero.tsx
+
+import Link from "next/link";
+
 import {
-    ArrowDown,
-    ArrowRight,
-    Code2,
-    Database,
-    Layers3,
-    ServerCog,
-    Smartphone,
-  } from "lucide-react";
-  
-  import Reveal from "@/components/motion/Reveal";
-  import { siteConfig } from "@/config/site";
-  
-  const stack = [
-    {
-      icon: Layers3,
-      label: "Frontend",
-      value: "React · Next.js · TypeScript",
-    },
-    {
-      icon: Smartphone,
-      label: "Mobile",
-      value: "React Native · Expo",
-    },
-    {
-      icon: ServerCog,
-      label: "Backend",
-      value: "Node.js · NestJS · REST",
-    },
-    {
-      icon: Database,
-      label: "Data",
-      value: "PostgreSQL · Prisma",
-    },
-    {
-      icon: Code2,
-      label: "Cloud & delivery",
-      value: "AWS · Vercel · CI/CD",
-    },
-  ] as const;
-  
-  export default function Hero() {
-    return (
-      <section
-        id="top"
-        className="site-container relative flex min-h-[calc(100vh-74px)] items-center py-20"
-      >
-        {/* Halo décoratif derrière le hero */}
-        <div className="pointer-events-none absolute left-[-14%] top-[20%] -z-10 h-[420px] w-[420px] rounded-full bg-[#00e6e6]/[0.035] blur-[100px]" />
-  
-        <div className="grid w-full items-center gap-16 lg:grid-cols-[1.25fr_.75fr]">
-          <div>
-            <Reveal>
-              <div className="flex items-center gap-3">
-                <span className="status-dot" />
-  
-                <p className="section-kicker">
-                  Disponible pour un CDI · Paris / Hybride
-                </p>
-              </div>
-            </Reveal>
-  
-            <Reveal delay={0.08}>
-              <p className="mt-8 font-display text-sm font-medium uppercase tracking-[0.22em] text-white/38">
-                Amine Kassi
-              </p>
-            </Reveal>
-  
-            <Reveal delay={0.14}>
-              <h1 className="neon-title mt-4 max-w-4xl font-display text-[clamp(3rem,7vw,6.6rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-white">
-                Full-Stack
-                <br />
-                <span className="text-accent">
-                  Developer
-                </span>
-              </h1>
-            </Reveal>
-  
-            <Reveal delay={0.2}>
-              <p className="mt-8 max-w-2xl text-base leading-8 text-white/58 md:text-lg">
-                Je conçois et mets en production des
-                applications{" "}
-                <strong className="font-medium text-white/85">
-                  web et mobiles
-                </strong>
-                , du frontend à l&apos;infrastructure.
-              </p>
-  
-              <p className="mt-2 max-w-2xl text-base leading-8 text-white/42">
-                TypeScript, React, Next.js, React Native,
-                Node.js, NestJS, PostgreSQL et AWS.
-              </p>
-            </Reveal>
-  
-            <Reveal delay={0.28}>
-              <div className="mt-9 flex flex-wrap gap-4">
-                <a
-                  href="#projects"
-                  className="neon-button neon-button-primary"
-                >
-                  Voir mes projets
-                  <ArrowRight size={16} />
-                </a>
-  
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="neon-button"
-                >
-                  Me contacter
-                </a>
-              </div>
-            </Reveal>
-  
-            <Reveal delay={0.34}>
-              <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs font-medium uppercase tracking-[0.1em] text-white/30">
-                <span>Louvres (95)</span>
-  
-                <span className="hidden h-1 w-1 rounded-full bg-white/20 sm:block" />
-  
-                <span>Paris / Île-de-France</span>
-  
-                <span className="hidden h-1 w-1 rounded-full bg-white/20 sm:block" />
-  
-                <span>Web · Mobile · Cloud</span>
-              </div>
-            </Reveal>
-          </div>
-  
+  ArrowDown,
+  ArrowRight,
+  Cloud,
+  Code2,
+  Database,
+  Layers3,
+  Server,
+  Smartphone,
+} from "lucide-react";
+
+import { FaGithub } from "react-icons/fa";
+
+import Reveal from "@/components/motion/Reveal";
+
+
+const heroStack = [
+  "TypeScript",
+  "React",
+  "Next.js",
+  "NestJS",
+  "React Native",
+  "PostgreSQL",
+  "AWS",
+] as const;
+
+
+export default function Hero() {
+  return (
+    <section
+      id="top"
+      className="hero-shell"
+    >
+      {/* =====================================================
+          DÉCOR DE FOND
+      ====================================================== */}
+
+      <div
+        aria-hidden="true"
+        className="hero-grid-background"
+      />
+
+      <div
+        aria-hidden="true"
+        className="hero-glow hero-glow--cyan"
+      />
+
+      <div
+        aria-hidden="true"
+        className="hero-glow hero-glow--violet"
+      />
+
+      <div
+        aria-hidden="true"
+        className="hero-scanline"
+      />
+
+
+      <div className="site-container hero-layout">
+        {/* =====================================================
+            CONTENU PRINCIPAL
+        ====================================================== */}
+
+        <div className="hero-copy">
+          <Reveal>
+            <div className="hero-availability">
+              <span className="status-dot" />
+
+              <span>
+                Disponible pour un CDI · Paris / Hybride
+              </span>
+            </div>
+          </Reveal>
+
+
           <Reveal
-            delay={0.22}
             y={18}
-            className="relative"
+            delay={0.05}
           >
-            <aside className="glass-panel p-6 md:p-7">
-              <div className="pointer-events-none absolute right-6 top-6 neon-diamond" />
-  
-              <div className="mb-7">
-                <p className="section-kicker">
-                  Stack principale
-                </p>
-  
-                <h2 className="mt-2 font-display text-2xl font-semibold text-white">
-                  Du produit à la production
-                  <span className="text-accent">.</span>
-                </h2>
-              </div>
-  
-              <div className="space-y-1">
-                {stack.map((item) => {
-                  const Icon = item.icon;
-  
-                  return (
-                    <div
-                      key={item.label}
-                      className="group flex items-center gap-4 border-b border-white/[0.06] py-4 last:border-0"
-                    >
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#00e6e6]/15 bg-[#00e6e6]/[0.035] text-[#00e6e6]/70 transition group-hover:border-[#00e6e6]/35 group-hover:text-[#00e6e6]">
-                        <Icon size={18} />
-                      </div>
-  
-                      <div>
-                        <p className="text-[0.68rem] uppercase tracking-[0.14em] text-white/28">
-                          {item.label}
-                        </p>
-  
-                        <p className="mt-1 text-sm font-medium text-white/70">
-                          {item.value}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-  
-              <div className="mt-6 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
-                <p className="text-xs leading-6 text-white/35">
-                  Applications web & mobile · APIs ·
-                  paiements · automatisations · cloud ·
-                  déploiement
-                </p>
-              </div>
-            </aside>
-  
-            {/* Glow violet discret */}
-            <div className="pointer-events-none absolute -bottom-12 -right-10 -z-10 h-48 w-48 rounded-full bg-[#9b5cff]/10 blur-[70px]" />
+            <p className="hero-name">
+              AMINE KASSI
+            </p>
+
+            <h1 className="hero-title">
+              <span>
+                Full-Stack
+              </span>
+
+              <strong>
+                Developer
+              </strong>
+            </h1>
+          </Reveal>
+
+
+          <Reveal
+            y={18}
+            delay={0.1}
+          >
+            <p className="hero-description">
+              Je conçois et mets en production des
+              applications <b>web et mobiles</b>, du
+              frontend à l&apos;API, jusqu&apos;au cloud
+              et au déploiement.
+            </p>
+
+            <p className="hero-stack-summary">
+              TypeScript, React, Next.js, React Native,
+              Node.js, NestJS, PostgreSQL et AWS.
+            </p>
+          </Reveal>
+
+
+          <Reveal
+            y={18}
+            delay={0.15}
+          >
+            <div className="hero-actions">
+              <Link
+                href="/#projects"
+                className="neon-button neon-button-primary"
+              >
+                Voir mes projets
+
+                <ArrowRight
+                  aria-hidden="true"
+                  size={16}
+                />
+              </Link>
+
+              <Link
+                href="/contact"
+                className="neon-button"
+              >
+                Me contacter
+              </Link>
+            </div>
+          </Reveal>
+
+
+          <Reveal
+            y={15}
+            delay={0.2}
+          >
+            <div className="hero-stack-cloud">
+              {heroStack.map((technology) => (
+                <span key={technology}>
+                  {technology}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+
+
+          <Reveal
+            y={12}
+            delay={0.24}
+          >
+            <div className="hero-meta">
+              <span>
+                Louvres (95)
+              </span>
+
+              <i />
+
+              <span>
+                Paris / Île-de-France
+              </span>
+
+              <i />
+
+              <span>
+                Web · Mobile · Cloud
+              </span>
+            </div>
           </Reveal>
         </div>
-  
-        <a
-          href="#projects"
-          aria-label="Descendre vers les projets"
-          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-white/20 transition hover:text-[#00e6e6]/70 lg:flex"
+
+
+        {/* =====================================================
+            ARCHITECTURE VISUELLE
+        ====================================================== */}
+
+        <Reveal
+          y={22}
+          delay={0.1}
+          className="hero-visual"
         >
-          <span className="font-display text-[0.6rem] uppercase tracking-[0.2em]">
-            Explorer
-          </span>
-  
-          <ArrowDown size={16} />
-        </a>
-      </section>
-    );
-  }
+          <div className="hero-architecture-card">
+            {/* En-tête */}
+            <div className="hero-architecture-header">
+              <div>
+                <span>
+                  ARCHITECTURE
+                </span>
+
+                <h2>
+                  Du produit à la production.
+                </h2>
+              </div>
+
+              <div className="hero-live-indicator">
+                <span />
+
+                LIVE
+              </div>
+            </div>
+
+
+            {/* Schéma */}
+            <div className="hero-architecture-map">
+              <div className="hero-architecture-line hero-architecture-line--1" />
+              <div className="hero-architecture-line hero-architecture-line--2" />
+              <div className="hero-architecture-line hero-architecture-line--3" />
+
+
+              {/* Frontend */}
+              <div className="hero-tech-node hero-tech-node--frontend">
+                <div className="hero-tech-icon">
+                  <Code2
+                    aria-hidden="true"
+                    size={19}
+                  />
+                </div>
+
+                <div>
+                  <span>
+                    FRONTEND
+                  </span>
+
+                  <strong>
+                    Next.js · React
+                  </strong>
+
+                  <small>
+                    Vercel
+                  </small>
+                </div>
+              </div>
+
+
+              {/* Mobile */}
+              <div className="hero-tech-node hero-tech-node--mobile">
+                <div className="hero-tech-icon">
+                  <Smartphone
+                    aria-hidden="true"
+                    size={19}
+                  />
+                </div>
+
+                <div>
+                  <span>
+                    MOBILE
+                  </span>
+
+                  <strong>
+                    React Native
+                  </strong>
+
+                  <small>
+                    Expo · iOS · Android
+                  </small>
+                </div>
+              </div>
+
+
+              {/* Backend */}
+              <div className="hero-tech-node hero-tech-node--backend">
+                <div className="hero-tech-icon">
+                  <Server
+                    aria-hidden="true"
+                    size={19}
+                  />
+                </div>
+
+                <div>
+                  <span>
+                    API
+                  </span>
+
+                  <strong>
+                    NestJS · Node.js
+                  </strong>
+
+                  <small>
+                    REST · Auth · Business logic
+                  </small>
+                </div>
+              </div>
+
+
+              {/* Data */}
+              <div className="hero-tech-node hero-tech-node--database">
+                <div className="hero-tech-icon">
+                  <Database
+                    aria-hidden="true"
+                    size={19}
+                  />
+                </div>
+
+                <div>
+                  <span>
+                    DATA
+                  </span>
+
+                  <strong>
+                    PostgreSQL
+                  </strong>
+
+                  <small>
+                    Prisma
+                  </small>
+                </div>
+              </div>
+
+
+              {/* Cloud */}
+              <div className="hero-tech-node hero-tech-node--cloud">
+                <div className="hero-tech-icon">
+                  <Cloud
+                    aria-hidden="true"
+                    size={19}
+                  />
+                </div>
+
+                <div>
+                  <span>
+                    CLOUD
+                  </span>
+
+                  <strong>
+                    AWS
+                  </strong>
+
+                  <small>
+                    Lightsail · S3 · SES
+                  </small>
+                </div>
+              </div>
+            </div>
+
+
+            {/* =================================================
+                FOOTER ARCHITECTURE
+            ================================================== */}
+
+            <div className="hero-architecture-footer">
+              <div>
+                <FaGithub
+                  aria-hidden="true"
+                  size={16}
+                />
+
+                <span>
+                  GitHub Actions
+                </span>
+              </div>
+
+              <div>
+                <Layers3
+                  aria-hidden="true"
+                  size={16}
+                />
+
+                <span>
+                  Architecture découplée
+                </span>
+              </div>
+            </div>
+          </div>
+
+
+          {/* Carte décorative */}
+          <div className="hero-floating-card">
+            <span>
+              05
+            </span>
+
+            <div>
+              <strong>
+                Projets
+              </strong>
+
+              <small>
+                présentés
+              </small>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+
+
+      {/* =====================================================
+          SCROLL INDICATOR
+      ====================================================== */}
+
+      <a
+        href="#technology-cloud"
+        className="hero-scroll"
+        aria-label="Continuer vers les compétences"
+      >
+        <span>
+          Explorer
+        </span>
+
+        <ArrowDown
+          aria-hidden="true"
+          size={17}
+        />
+      </a>
+    </section>
+  );
+}

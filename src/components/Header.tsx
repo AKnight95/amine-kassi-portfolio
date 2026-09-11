@@ -64,15 +64,33 @@ export default function Header() {
           aria-label="Navigation principale"
           className="hidden items-center gap-8 md:flex"
         >
-          {navigationItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="nav-link"
-            >
-              {item.label}
-            </Link>
-          ))}
+          <Link
+            href="/#projects"
+            className="nav-link"
+          >
+            Projets
+          </Link>
+
+          <Link
+            href="/competences"
+            className="nav-link"
+          >
+            Compétences
+          </Link>
+
+          <Link
+            href="/#parcours"
+            className="nav-link"
+          >
+            Parcours
+          </Link>
+
+          <Link
+            href="/contact"
+            className="nav-link"
+          >
+            Contact
+          </Link>
         </nav>
 
         {/* ---------------------------------------------------------
