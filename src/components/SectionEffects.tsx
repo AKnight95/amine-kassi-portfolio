@@ -4,6 +4,26 @@ import { useEffect, useRef } from "react";
 
 const DEFAULT_ACCENT = "#00e6e6";
 
+/**
+ * Les zones observées portent toutes soit --section-accent,
+ * soit --project-accent. L'IntersectionObserver ne se déclenche
+ * qu'aux changements de section : aucun calcul de style n'est
+ * effectué à chaque pixel de scroll ou de déplacement de souris.
+ */
+const SECTION_SELECTOR = [
+  ".hero-shell",
+  ".technology-cloud-section",
+  ".project-showcase",
+  ".project-detail",
+  ".skills-page-hero",
+  ".skills-capabilities",
+  ".skills-groups-section",
+  ".skills-architecture-section",
+  ".skills-page-cta",
+  ".contact-page",
+  ".site-footer",
+].join(",");
+
 const INTERACTIVE_SELECTOR = [
   "a",
   "button",
@@ -12,147 +32,156 @@ const INTERACTIVE_SELECTOR = [
   "textarea",
   "select",
   "summary",
+  "label",
   '[data-cursor="interactive"]',
 ].join(",");
 
-const NATIVE_CURSOR_SELECTOR = [
-  "input",
-  "textarea",
-  "select",
-  '[contenteditable="true"]',
-].join(",");
-
-/**
- * Lit la couleur portée par la section située sous la souris / au centre de
- * l'écran. Les projets restent prioritaires grâce à --project-accent.
- */
-function getElementAccent(element: Element | null): string {
-  if (!element) {
-    return DEFAULT_ACCENT;
-  }
-
+function readSectionAccent(element: Element): string {
   const styles = window.getComputedStyle(element);
 
   const candidates = [
-    styles.getPropertyValue("--cursor-accent"),
     styles.getPropertyValue("--project-accent"),
     styles.getPropertyValue("--section-accent"),
+    styles.getPropertyValue("--cursor-accent"),
     styles.getPropertyValue("--accent"),
   ];
 
-  const accent = candidates.find((value) => value.trim().length > 0);
-
-  return accent?.trim() || DEFAULT_ACCENT;
+  return (
+    candidates.find((value) => value.trim().length > 0)?.trim() ||
+    DEFAULT_ACCENT
+  );
 }
 
-/**
- * Effets globaux liés à la position de la souris et à la section active :
- * - curseur personnalisé ;
- * - halo coloré selon la section ;
- * - couleur active du header et de la scrollbar au scroll.
- *
- * Le composant ne provoque pas de re-render à chaque mouvement de souris :
- * les transformations sont appliquées directement sur le DOM via des refs.
- */
 export default function SectionEffects() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef<number | null>(null);
-  const sectionFrameRef = useRef<number | null>(null);
-  const lastAccentRef = useRef(DEFAULT_ACCENT);
+  const pointerFrameRef = useRef<number | null>(null);
+  const latestPointerRef = useRef({ x: 0, y: 0 });
+  const activeAccentRef = useRef(DEFAULT_ACCENT);
 
   useEffect(() => {
     const cursor = cursorRef.current;
+    const root = document.documentElement;
 
     if (!cursor) {
       return undefined;
     }
 
     const finePointer = window.matchMedia("(pointer: fine)");
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
 
-    if (!finePointer.matches || reducedMotion.matches) {
-      cursor.dataset.enabled = "false";
+    if (!finePointer.matches) {
       return undefined;
     }
 
+    root.classList.add("custom-cursor-enabled");
     cursor.dataset.enabled = "true";
 
-    const applyAccent = (accent: string) => {
-      if (accent === lastAccentRef.current) {
+    /**
+     * Une seule mise à jour globale au changement de section.
+     * Cela évite de recalculer la cascade CSS pendant le scroll.
+     */
+    const setActiveAccent = (accent: string) => {
+      if (accent === activeAccentRef.current) {
         return;
       }
 
-      lastAccentRef.current = accent;
+      activeAccentRef.current = accent;
+      root.style.setProperty("--active-accent", accent);
       cursor.style.setProperty("--cursor-color", accent);
     };
 
-    const syncActiveSection = () => {
-      sectionFrameRef.current = null;
+    /**
+     * On observe une bande située vers le premier tiers de l'écran.
+     * La section qui traverse cette bande devient la section active.
+     */
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>(SECTION_SELECTOR),
+    );
 
-      const sampleX = Math.round(window.innerWidth * 0.5);
-      const sampleY = Math.round(
-        Math.min(
-          window.innerHeight - 40,
-          Math.max(150, window.innerHeight * 0.36),
-        ),
-      );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
 
-      const sampledElement = document.elementFromPoint(sampleX, sampleY);
-      const accent = getElementAccent(sampledElement);
-
-      document.documentElement.style.setProperty(
-        "--active-accent",
-        accent,
-      );
-    };
-
-    const requestSectionSync = () => {
-      if (sectionFrameRef.current !== null) {
-        return;
-      }
-
-      sectionFrameRef.current = window.requestAnimationFrame(
-        syncActiveSection,
-      );
-    };
-
-    const handlePointerMove = (event: PointerEvent) => {
-      if (frameRef.current !== null) {
-        window.cancelAnimationFrame(frameRef.current);
-      }
-
-      const { clientX, clientY } = event;
-
-      frameRef.current = window.requestAnimationFrame(() => {
-        frameRef.current = null;
-
-        cursor.style.transform = `translate3d(${clientX}px, ${clientY}px, 0)`;
-        cursor.dataset.visible = "true";
-
-        const target = event.target;
-
-        if (!(target instanceof Element)) {
-          cursor.dataset.interactive = "false";
-          cursor.dataset.native = "false";
+        if (visibleEntries.length === 0) {
           return;
         }
 
-        applyAccent(getElementAccent(target));
+        const activeEntry = visibleEntries.sort(
+          (a, b) => b.intersectionRatio - a.intersectionRatio,
+        )[0];
 
-        cursor.dataset.interactive = target.closest(
-          INTERACTIVE_SELECTOR,
-        )
-          ? "true"
-          : "false";
+        setActiveAccent(readSectionAccent(activeEntry.target));
+      },
+      {
+        root: null,
+        rootMargin: "-28% 0px -62% 0px",
+        threshold: [0, 0.01],
+      },
+    );
 
-        cursor.dataset.native = target.closest(
-          NATIVE_CURSOR_SELECTOR,
-        )
-          ? "true"
-          : "false";
-      });
+    sections.forEach((section) => observer.observe(section));
+
+    /**
+     * Initialise la couleur sur la section réellement visible,
+     * sans attendre le premier scroll.
+     */
+    const initialSample = document.elementFromPoint(
+      Math.round(window.innerWidth * 0.5),
+      Math.round(window.innerHeight * 0.34),
+    );
+
+    const initialSection = initialSample?.closest(SECTION_SELECTOR);
+
+    if (initialSection) {
+      const initialAccent = readSectionAccent(initialSection);
+      activeAccentRef.current = initialAccent;
+      root.style.setProperty("--active-accent", initialAccent);
+      cursor.style.setProperty("--cursor-color", initialAccent);
+    } else {
+      root.style.setProperty("--active-accent", DEFAULT_ACCENT);
+      cursor.style.setProperty("--cursor-color", DEFAULT_ACCENT);
+    }
+
+    /**
+     * Le mouvement du curseur ne fait qu'un translate3d.
+     * Aucun getComputedStyle, querySelector ou setState ici.
+     */
+    const paintPointer = () => {
+      pointerFrameRef.current = null;
+
+      const { x, y } = latestPointerRef.current;
+      cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      latestPointerRef.current = {
+        x: event.clientX,
+        y: event.clientY,
+      };
+
+      cursor.dataset.visible = "true";
+
+      if (pointerFrameRef.current !== null) {
+        return;
+      }
+
+      pointerFrameRef.current = window.requestAnimationFrame(paintPointer);
+    };
+
+    /**
+     * La détection interactive se fait uniquement lorsqu'on entre
+     * sur un nouvel élément, pas pendant tous les pointermove.
+     */
+    const handlePointerOver = (event: PointerEvent) => {
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        cursor.dataset.interactive = "false";
+        return;
+      }
+
+      cursor.dataset.interactive = target.closest(INTERACTIVE_SELECTOR)
+        ? "true"
+        : "false";
     };
 
     const handlePointerLeave = () => {
@@ -163,32 +192,29 @@ export default function SectionEffects() {
       cursor.dataset.visible = "true";
     };
 
-    syncActiveSection();
-
     window.addEventListener("pointermove", handlePointerMove, {
       passive: true,
     });
-    window.addEventListener("pointerleave", handlePointerLeave);
-    window.addEventListener("pointerenter", handlePointerEnter);
-    window.addEventListener("scroll", requestSectionSync, {
+    window.addEventListener("pointerover", handlePointerOver, {
       passive: true,
     });
-    window.addEventListener("resize", requestSectionSync);
+    document.addEventListener("mouseleave", handlePointerLeave);
+    document.addEventListener("mouseenter", handlePointerEnter);
 
     return () => {
+      observer.disconnect();
+
       window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerleave", handlePointerLeave);
-      window.removeEventListener("pointerenter", handlePointerEnter);
-      window.removeEventListener("scroll", requestSectionSync);
-      window.removeEventListener("resize", requestSectionSync);
+      window.removeEventListener("pointerover", handlePointerOver);
+      document.removeEventListener("mouseleave", handlePointerLeave);
+      document.removeEventListener("mouseenter", handlePointerEnter);
 
-      if (frameRef.current !== null) {
-        window.cancelAnimationFrame(frameRef.current);
+      if (pointerFrameRef.current !== null) {
+        window.cancelAnimationFrame(pointerFrameRef.current);
       }
 
-      if (sectionFrameRef.current !== null) {
-        window.cancelAnimationFrame(sectionFrameRef.current);
-      }
+      root.classList.remove("custom-cursor-enabled");
+      root.style.removeProperty("--active-accent");
     };
   }, []);
 
@@ -200,7 +226,6 @@ export default function SectionEffects() {
       data-enabled="false"
       data-visible="false"
       data-interactive="false"
-      data-native="false"
     >
       <span className="custom-cursor-halo" />
       <span className="custom-cursor-ring" />
