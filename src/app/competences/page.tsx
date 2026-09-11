@@ -18,14 +18,21 @@ import {
 } from "lucide-react";
 
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
 import Reveal from "@/components/motion/Reveal";
-import { getTechnologyIcon } from "@/config/technologyIcons";
+
+import {
+  getTechnologyIcon,
+} from "@/config/technologyIcons";
 
 
 export const metadata: Metadata = {
-  title: "Compétences — Amine Kassi",
+  title:
+    "Compétences — Amine Kassi",
+
   description:
-    "Compétences techniques d'Amine Kassi : TypeScript, React, Next.js, NestJS, React Native, PostgreSQL, AWS, CI/CD et développement Full-Stack.",
+    "Compétences techniques d'Amine Kassi : TypeScript, React, Next.js, NestJS, React Native, PostgreSQL, AWS et CI/CD.",
 };
 
 
@@ -36,131 +43,152 @@ type SkillGroup = {
 };
 
 
-const skillGroups: readonly SkillGroup[] = [
-  {
-    title: "Frontend",
-    description:
-      "Interfaces web responsives, applications métier et expériences produit modernes.",
+const skillGroups:
+  readonly SkillGroup[] = [
+    {
+      title: "Frontend",
 
-    technologies: [
-      "HTML5",
-      "CSS",
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Next.js",
-      "Tailwind CSS",
-      "Ant Design",
-    ],
-  },
+      description:
+        "Interfaces web responsives, applications métier et expériences produit modernes.",
 
-  {
-    title: "Backend & Data",
-    description:
-      "API métier, authentification, gestion de données et intégrations serveur.",
+      technologies: [
+        "HTML5",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Tailwind CSS",
+        "Ant Design",
+      ],
+    },
 
-    technologies: [
-      "Node.js",
-      "NestJS",
-      "Prisma",
-      "PostgreSQL",
-      "PHP",
-      "Symfony",
-      "WordPress",
-    ],
-  },
+    {
+      title:
+        "Backend & Data",
 
-  {
-    title: "Mobile",
-    description:
-      "Applications mobiles TypeScript distribuées sur Android et iOS.",
+      description:
+        "API métier, authentification, règles fonctionnelles, données et intégrations serveur.",
 
-    technologies: [
-      "React Native",
-      "Expo",
-      "Android",
-      "iOS",
-    ],
-  },
+      technologies: [
+        "Node.js",
+        "NestJS",
+        "Prisma",
+        "PostgreSQL",
+        "PHP",
+        "Symfony",
+        "WordPress",
+      ],
+    },
 
-  {
-    title: "Cloud & DevOps",
-    description:
-      "Déploiement des applications et exploitation des environnements de production.",
+    {
+      title: "Mobile",
 
-    technologies: [
-      "AWS Lightsail",
-      "AWS S3",
-      "AWS SES",
-      "Vercel",
-      "Docker",
-      "Nginx",
-      "PM2",
-      "GitHub",
-      "GitHub Actions",
-    ],
-  },
+      description:
+        "Applications mobiles TypeScript distribuées sur Android et iOS.",
 
-  {
-    title: "Intégrations",
-    description:
-      "Paiement, communications, authentification externe et automatisations.",
+      technologies: [
+        "React Native",
+        "Expo",
+      ],
+    },
 
-    technologies: [
-      "Stripe",
-      "Stripe Connect",
-      "Stripe Terminal",
-      "Tap to Pay",
-      "SMSmode",
-      "OAuth / Social Login",
-      "CRON / tâches planifiées",
-      "Google Analytics",
-    ],
-  },
+    {
+      title:
+        "Cloud & DevOps",
 
-  {
-    title: "Outils & IA",
-    description:
-      "Outils utilisés pour concevoir, tester, organiser et accélérer certaines tâches.",
+      description:
+        "Déploiement et exploitation d'applications et d'environnements de production.",
 
-    technologies: [
-      "Postman",
-      "Trello",
-      "ChatGPT",
-      "Emergent",
-      "Midjourney",
-    ],
-  },
-];
+      technologies: [
+        "AWS Lightsail",
+        "AWS S3",
+        "AWS SES",
+        "Vercel",
+        "Docker",
+        "Nginx",
+        "PM2",
+        "GitHub",
+        "GitHub Actions",
+      ],
+    },
+
+    {
+      title:
+        "Intégrations",
+
+      description:
+        "Paiement, communications, authentification externe et automatisations.",
+
+      technologies: [
+        "Stripe",
+        "Stripe Connect",
+        "Stripe Terminal",
+        "Tap to Pay",
+        "SMSmode",
+        "OAuth / Social Login",
+        "CRON / tâches planifiées",
+        "Google Analytics",
+      ],
+    },
+
+    {
+      title:
+        "Outils & IA",
+
+      description:
+        "Outils utilisés pour tester, organiser, concevoir et accélérer certaines tâches.",
+
+      technologies: [
+        "Postman",
+        "Trello",
+        "ChatGPT",
+        "Emergent",
+        "Midjourney",
+      ],
+    },
+  ];
 
 
 const capabilities = [
   {
     icon: Code2,
-    title: "Développer un produit",
+
+    title:
+      "Développer un produit",
+
     text:
       "Passer d'une interface fonctionnelle à une application complète, maintenable et connectée à de vraies règles métier.",
   },
 
   {
     icon: Braces,
-    title: "Construire une API",
+
+    title:
+      "Construire une API",
+
     text:
       "Structurer des endpoints REST, l'authentification, les rôles, les permissions et les intégrations externes.",
   },
 
   {
     icon: Smartphone,
-    title: "Livrer sur mobile",
+
+    title:
+      "Livrer sur mobile",
+
     text:
-      "Développer avec React Native / Expo et gérer les builds Android et iOS.",
+      "Développer avec React Native et Expo, puis gérer les builds Android et iOS.",
   },
 
   {
     icon: Rocket,
-    title: "Mettre en production",
+
+    title:
+      "Mettre en production",
+
     text:
-      "Déployer frontend et backend, configurer Nginx, CI/CD, domaines, HTTPS et services cloud.",
+      "Déployer frontend et backend, configurer CI/CD, Nginx, domaines, HTTPS et services cloud.",
   },
 ] as const;
 
@@ -170,7 +198,10 @@ export default function CompetencesPage() {
     <>
       <Header />
 
-      <main className="skills-page">
+      <main
+        id="top"
+        className="skills-page"
+      >
         {/* =====================================================
             HERO
         ====================================================== */}
@@ -189,7 +220,10 @@ export default function CompetencesPage() {
 
               <h1 className="skills-page-title">
                 Une stack orientée
-                <span> produit.</span>
+                <span>
+                  {" "}
+                  produit.
+                </span>
               </h1>
 
               <p className="skills-page-intro">
@@ -207,7 +241,7 @@ export default function CompetencesPage() {
 
 
         {/* =====================================================
-            CE QUE JE SAIS FAIRE
+            CAPACITÉS
         ====================================================== */}
 
         <section className="skills-capabilities">
@@ -227,7 +261,8 @@ export default function CompetencesPage() {
                         capability.title
                       }
                       delay={
-                        index * 0.05
+                        index *
+                        0.05
                       }
                     >
                       <article className="skills-capability-card">
@@ -260,7 +295,7 @@ export default function CompetencesPage() {
 
 
         {/* =====================================================
-            GROUPES DE TECHNOLOGIES
+            TECHNOLOGIES
         ====================================================== */}
 
         <section className="skills-groups-section">
@@ -271,14 +306,17 @@ export default function CompetencesPage() {
                 groupIndex,
               ) => (
                 <Reveal
-                  key={group.title}
+                  key={
+                    group.title
+                  }
                   y={20}
                 >
                   <section className="skills-group">
                     <div className="skills-group-heading">
                       <span>
                         {String(
-                          groupIndex + 1,
+                          groupIndex +
+                            1,
                         ).padStart(
                           2,
                           "0",
@@ -287,7 +325,9 @@ export default function CompetencesPage() {
 
                       <div>
                         <h2>
-                          {group.title}
+                          {
+                            group.title
+                          }
                         </h2>
 
                         <p>
@@ -374,37 +414,60 @@ export default function CompetencesPage() {
 
                 <div className="skills-architecture-flow">
                   <div>
-                    <Layers3 size={19} />
+                    <Layers3
+                      aria-hidden="true"
+                      size={19}
+                    />
 
                     <span>
-                      Next.js / React Native
+                      Next.js /
+                      React Native
                     </span>
                   </div>
 
-                  <ArrowRight size={15} />
+                  <ArrowRight
+                    aria-hidden="true"
+                    size={15}
+                  />
 
                   <div>
-                    <GitBranch size={19} />
+                    <GitBranch
+                      aria-hidden="true"
+                      size={19}
+                    />
 
                     <span>
                       API REST NestJS
                     </span>
                   </div>
 
-                  <ArrowRight size={15} />
+                  <ArrowRight
+                    aria-hidden="true"
+                    size={15}
+                  />
 
                   <div>
-                    <Database size={19} />
+                    <Database
+                      aria-hidden="true"
+                      size={19}
+                    />
 
                     <span>
-                      Prisma / PostgreSQL
+                      Prisma /
+                      PostgreSQL
                     </span>
                   </div>
 
-                  <ArrowRight size={15} />
+                  <ArrowRight
+                    aria-hidden="true"
+                    size={15}
+                  />
 
                   <div>
-                    <CloudCog size={19} />
+                    <CloudCog
+                      aria-hidden="true"
+                      size={19}
+                    />
 
                     <span>
                       AWS
@@ -415,22 +478,38 @@ export default function CompetencesPage() {
 
                 <div className="skills-principles">
                   <span>
-                    <ShieldCheck size={15} />
+                    <ShieldCheck
+                      aria-hidden="true"
+                      size={15}
+                    />
+
                     JWT & rôles
                   </span>
 
                   <span>
-                    <ShieldCheck size={15} />
+                    <ShieldCheck
+                      aria-hidden="true"
+                      size={15}
+                    />
+
                     HTTPS / CORS
                   </span>
 
                   <span>
-                    <ShieldCheck size={15} />
+                    <ShieldCheck
+                      aria-hidden="true"
+                      size={15}
+                    />
+
                     CI/CD
                   </span>
 
                   <span>
-                    <ShieldCheck size={15} />
+                    <ShieldCheck
+                      aria-hidden="true"
+                      size={15}
+                    />
+
                     Secrets serveur
                   </span>
                 </div>
@@ -440,14 +519,18 @@ export default function CompetencesPage() {
         </section>
 
 
-        {/* CTA */}
+        {/* =====================================================
+            CTA
+        ====================================================== */}
+
         <section className="skills-page-cta">
           <div className="site-container">
             <Reveal>
               <div className="skills-page-cta-inner">
                 <div>
                   <span>
-                    Voir ces compétences en pratique
+                    Voir ces compétences
+                    en pratique
                   </span>
 
                   <h2>
@@ -463,8 +546,8 @@ export default function CompetencesPage() {
                   Voir les projets
 
                   <ArrowRight
-                    size={16}
                     aria-hidden="true"
+                    size={16}
                   />
                 </Link>
               </div>
@@ -472,6 +555,8 @@ export default function CompetencesPage() {
           </div>
         </section>
       </main>
+
+      <Footer />
     </>
   );
 }

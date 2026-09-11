@@ -1,120 +1,104 @@
 // src/components/Header.tsx
 
+"use client";
+
+import { useState } from "react";
+
 import Link from "next/link";
-import { FileText } from "lucide-react";
+
+import {
+  FileText,
+  Menu,
+  X,
+} from "lucide-react";
+
 import { FaGithub } from "react-icons/fa";
 
-import { siteConfig } from "@/config/site";
 
-/**
- * Navigation principale du portfolio.
- *
- * On utilise systématiquement "/#section" plutôt que "#section"
- * afin que les liens fonctionnent également depuis les pages projet.
- */
-const navigationItems = [
+const navigation = [
   {
     label: "Projets",
     href: "/#projects",
   },
   {
     label: "Compétences",
-    href: "/#skills",
+    href: "/competences",
   },
   {
     label: "Parcours",
-    href: "/#about",
+    href: "/#parcours",
   },
   {
     label: "Contact",
-    href: "/#contact",
+    href: "/contact",
   },
 ] as const;
 
+
 export default function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] =
+    useState(false);
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header className="site-header">
-      <div className="site-container flex h-[74px] items-center justify-between">
-        {/* ---------------------------------------------------------
-            IDENTITÉ / RETOUR EN HAUT DE LA HOMEPAGE
-        ---------------------------------------------------------- */}
+      <div className="site-container site-header-inner">
+        {/* =====================================================
+            IDENTITÉ
+        ====================================================== */}
+
         <Link
-          href="/#top"
-          aria-label="Retour en haut de la page d'accueil"
-          className="group flex items-center gap-3"
+          href="/"
+          className="site-brand"
+          aria-label="Retour à l'accueil"
+          onClick={closeMobileMenu}
         >
-          <span className="font-display text-lg font-bold tracking-[0.16em] text-white">
+          <span>
             AMINE
-            <span className="text-accent">.</span>
+            <strong>.</strong>
           </span>
 
-          <span
+          <i
             aria-hidden="true"
-            className="neon-diamond opacity-60 transition-opacity duration-200 group-hover:opacity-100"
+            className="neon-diamond"
           />
         </Link>
 
-        {/* ---------------------------------------------------------
-            NAVIGATION PRINCIPALE
 
-            Masquée sur mobile pour l'instant afin de garder
-            un header propre. On ajoutera ensuite un vrai menu mobile.
-        ---------------------------------------------------------- */}
+        {/* =====================================================
+            NAVIGATION DESKTOP
+        ====================================================== */}
+
         <nav
+          className="site-navigation"
           aria-label="Navigation principale"
-          className="hidden items-center gap-8 md:flex"
         >
-          <Link
-            href="/#projects"
-            className="nav-link"
-          >
-            Projets
-          </Link>
-
-          <Link
-            href="/competences"
-            className="nav-link"
-          >
-            Compétences
-          </Link>
-
-          <Link
-            href="/#parcours"
-            className="nav-link"
-          >
-            Parcours
-          </Link>
-
-          <Link
-            href="/contact"
-            className="nav-link"
-          >
-            Contact
-          </Link>
+          {navigation.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="nav-link"
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
-        {/* ---------------------------------------------------------
-            ACTIONS RAPIDES
-        ---------------------------------------------------------- */}
-        <div className="flex items-center gap-2">
-          {/* GitHub */}
+
+        {/* =====================================================
+            ACTIONS
+        ====================================================== */}
+
+        <div className="site-header-actions">
           <a
-            href={siteConfig.github}
+            href="https://github.com/AKnight95"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Voir le profil GitHub d'Amine Kassi"
-            title="GitHub"
-            className="
-              hidden h-10 w-10 items-center justify-center
-              rounded-xl border border-white/[0.08]
-              bg-white/[0.025] text-white/45
-              transition-all duration-200
-              hover:border-[#00e6e6]/35
-              hover:bg-[#00e6e6]/[0.035]
-              hover:text-white
-              hover:shadow-[0_0_18px_rgba(0,230,230,0.12)]
-              sm:flex
-            "
+            className="header-icon-button"
+            aria-label="Ouvrir le profil GitHub d'Amine Kassi"
           >
             <FaGithub
               aria-hidden="true"
@@ -122,22 +106,90 @@ export default function Header() {
             />
           </a>
 
-          {/* CV PDF */}
           <a
-            href="/cv/amine-kassi-cv.pdf"
+            href="/amine-kassi-cv.pdf"
             target="_blank"
             rel="noopener noreferrer"
+            className="header-cv-button"
             aria-label="Ouvrir le CV d'Amine Kassi au format PDF"
-            className="neon-button"
           >
             <FileText
               aria-hidden="true"
               size={15}
             />
 
-            <span>CV</span>
+            <span>
+              CV
+            </span>
           </a>
+
+
+          {/* Bouton menu mobile */}
+          <button
+            type="button"
+            className="mobile-menu-button"
+            aria-label={
+              mobileMenuOpen
+                ? "Fermer le menu"
+                : "Ouvrir le menu"
+            }
+            aria-expanded={mobileMenuOpen}
+            onClick={() =>
+              setMobileMenuOpen(
+                (current) => !current,
+              )
+            }
+          >
+            {mobileMenuOpen ? (
+              <X
+                aria-hidden="true"
+                size={19}
+              />
+            ) : (
+              <Menu
+                aria-hidden="true"
+                size={19}
+              />
+            )}
+          </button>
         </div>
+      </div>
+
+
+      {/* =====================================================
+          MENU MOBILE
+      ====================================================== */}
+
+      <div
+        className={[
+          "mobile-navigation",
+          mobileMenuOpen
+            ? "mobile-navigation--open"
+            : "",
+        ].join(" ")}
+      >
+        <nav
+          className="site-container mobile-navigation-inner"
+          aria-label="Navigation mobile"
+        >
+          {navigation.map((item, index) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="mobile-nav-link"
+              onClick={closeMobileMenu}
+            >
+              <span>
+                {String(index + 1).padStart(
+                  2,
+                  "0",
+                )}
+              </span>
+
+              {item.label}
+            </Link>
+          ))}
+        </nav>
       </div>
     </header>
   );

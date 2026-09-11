@@ -11,6 +11,7 @@ import {
   Layers3,
   Server,
   Smartphone,
+  Sparkles,
 } from "lucide-react";
 
 import { FaGithub } from "react-icons/fa";
@@ -26,6 +27,25 @@ const heroStack = [
   "React Native",
   "PostgreSQL",
   "AWS",
+] as const;
+
+
+const domains = [
+  {
+    index: "01",
+    label: "WEB",
+    value: "React · Next.js",
+  },
+  {
+    index: "02",
+    label: "MOBILE",
+    value: "React Native · Expo",
+  },
+  {
+    index: "03",
+    label: "CLOUD",
+    value: "AWS · Vercel · CI/CD",
+  },
 ] as const;
 
 
@@ -59,10 +79,34 @@ export default function Hero() {
         className="hero-scanline"
       />
 
+      <div
+        aria-hidden="true"
+        className="hero-scanline hero-scanline--secondary"
+      />
+
+
+      {/* Grand texte décoratif arrière-plan */}
+      <div
+        aria-hidden="true"
+        className="hero-watermark"
+      >
+        <span>
+          BUILD
+        </span>
+
+        <span>
+          SHIP
+        </span>
+
+        <span>
+          ITERATE
+        </span>
+      </div>
+
 
       <div className="site-container hero-layout">
         {/* =====================================================
-            CONTENU PRINCIPAL
+            PRÉSENTATION
         ====================================================== */}
 
         <div className="hero-copy">
@@ -115,6 +159,10 @@ export default function Hero() {
           </Reveal>
 
 
+          {/* ===================================================
+              CTA
+          ==================================================== */}
+
           <Reveal
             y={18}
             delay={0.15}
@@ -142,9 +190,46 @@ export default function Hero() {
           </Reveal>
 
 
+          {/* ===================================================
+              DOMAINES PRINCIPAUX
+          ==================================================== */}
+
           <Reveal
             y={15}
-            delay={0.2}
+            delay={0.19}
+          >
+            <div className="hero-domain-grid">
+              {domains.map((domain) => (
+                <div
+                  key={domain.label}
+                  className="hero-domain"
+                >
+                  <span className="hero-domain-index">
+                    {domain.index}
+                  </span>
+
+                  <div>
+                    <strong>
+                      {domain.label}
+                    </strong>
+
+                    <small>
+                      {domain.value}
+                    </small>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+
+          {/* ===================================================
+              TECHNOLOGIES PRINCIPALES
+          ==================================================== */}
+
+          <Reveal
+            y={15}
+            delay={0.22}
           >
             <div className="hero-stack-cloud">
               {heroStack.map((technology) => (
@@ -156,9 +241,13 @@ export default function Hero() {
           </Reveal>
 
 
+          {/* ===================================================
+              INFORMATIONS
+          ==================================================== */}
+
           <Reveal
             y={12}
-            delay={0.24}
+            delay={0.25}
           >
             <div className="hero-meta">
               <span>
@@ -191,7 +280,14 @@ export default function Hero() {
           className="hero-visual"
         >
           <div className="hero-architecture-card">
-            {/* En-tête */}
+            {/* Rayon supérieur animé */}
+            <div
+              aria-hidden="true"
+              className="hero-card-beam"
+            />
+
+
+            {/* Header carte */}
             <div className="hero-architecture-header">
               <div>
                 <span>
@@ -211,11 +307,33 @@ export default function Hero() {
             </div>
 
 
-            {/* Schéma */}
+            {/* =================================================
+                SCHÉMA
+            ================================================== */}
+
             <div className="hero-architecture-map">
               <div className="hero-architecture-line hero-architecture-line--1" />
+
               <div className="hero-architecture-line hero-architecture-line--2" />
+
               <div className="hero-architecture-line hero-architecture-line--3" />
+
+
+              {/* Points lumineux en circulation */}
+              <span
+                aria-hidden="true"
+                className="hero-data-pulse hero-data-pulse--1"
+              />
+
+              <span
+                aria-hidden="true"
+                className="hero-data-pulse hero-data-pulse--2"
+              />
+
+              <span
+                aria-hidden="true"
+                className="hero-data-pulse hero-data-pulse--3"
+              />
 
 
               {/* Frontend */}
@@ -268,7 +386,7 @@ export default function Hero() {
               </div>
 
 
-              {/* Backend */}
+              {/* API */}
               <div className="hero-tech-node hero-tech-node--backend">
                 <div className="hero-tech-icon">
                   <Server
@@ -293,7 +411,7 @@ export default function Hero() {
               </div>
 
 
-              {/* Data */}
+              {/* Données */}
               <div className="hero-tech-node hero-tech-node--database">
                 <div className="hero-tech-icon">
                   <Database
@@ -345,7 +463,30 @@ export default function Hero() {
 
 
             {/* =================================================
-                FOOTER ARCHITECTURE
+                MOTS-CLÉS TECHNIQUES
+            ================================================== */}
+
+            <div className="hero-architecture-tags">
+              <span>
+                TYPE-SAFE
+              </span>
+
+              <span>
+                API-FIRST
+              </span>
+
+              <span>
+                CI/CD
+              </span>
+
+              <span>
+                CLOUD
+              </span>
+            </div>
+
+
+            {/* =================================================
+                FOOTER CARTE
             ================================================== */}
 
             <div className="hero-architecture-footer">
@@ -374,7 +515,7 @@ export default function Hero() {
           </div>
 
 
-          {/* Carte décorative */}
+          {/* Carte nombre de projets */}
           <div className="hero-floating-card">
             <span>
               05
@@ -390,12 +531,31 @@ export default function Hero() {
               </small>
             </div>
           </div>
+
+
+          {/* Carte secondaire */}
+          <div className="hero-floating-card hero-floating-card--delivery">
+            <Sparkles
+              aria-hidden="true"
+              size={17}
+            />
+
+            <div>
+              <strong>
+                Production
+              </strong>
+
+              <small>
+                Web · Mobile · Cloud
+              </small>
+            </div>
+          </div>
         </Reveal>
       </div>
 
 
       {/* =====================================================
-          SCROLL INDICATOR
+          CONTINUER
       ====================================================== */}
 
       <a
