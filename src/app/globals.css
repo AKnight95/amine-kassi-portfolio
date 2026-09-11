@@ -6038,3 +6038,1154 @@ button:focus-visible,
     display: none;
   }
 }
+
+
+/* ============================================================
+   PALETTE DYNAMIQUE PAR SECTION
+   ------------------------------------------------------------
+   Les projets conservent leurs propres variables --project-*.
+   Les autres zones changent de couleur sans modifier les
+   composants React existants : on redéfinit localement --accent.
+   ============================================================ */
+
+@property --active-accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #00e6e6;
+}
+
+@property --cursor-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #00e6e6;
+}
+
+:root {
+  --active-accent: #00e6e6;
+  --cursor-color: #00e6e6;
+
+  transition:
+    --active-accent 360ms ease,
+    --cursor-color 220ms ease;
+}
+
+/* Le fond global devient volontairement plus neutre :
+   les couleurs sont maintenant apportées par les sections. */
+.portfolio-background {
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(0, 230, 230, 0.055),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 84% 28%,
+      rgba(155, 92, 255, 0.055),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 54% 100%,
+      rgba(255, 107, 138, 0.03),
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      #05090b 0%,
+      #020506 46%,
+      #020304 100%
+    );
+}
+
+
+/* ============================================================
+   HEADER — COULEUR DE LA SECTION ACTIVE
+   ============================================================ */
+
+.site-header {
+  border-bottom-color:
+    color-mix(
+      in srgb,
+      var(--active-accent) 18%,
+      transparent
+    );
+}
+
+.site-header::after {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      color-mix(
+        in srgb,
+        var(--active-accent) 68%,
+        transparent
+      ),
+      transparent
+    );
+
+  box-shadow:
+    0 0 20px
+    color-mix(
+      in srgb,
+      var(--active-accent) 34%,
+      transparent
+    );
+
+  transition:
+    background 360ms ease,
+    box-shadow 360ms ease;
+}
+
+.site-brand strong {
+  color: var(--active-accent);
+
+  transition:
+    color 360ms ease,
+    text-shadow 360ms ease;
+
+  text-shadow:
+    0 0 16px
+    color-mix(
+      in srgb,
+      var(--active-accent) 28%,
+      transparent
+    );
+}
+
+.nav-link::after {
+  background: var(--active-accent);
+
+  box-shadow:
+    0 0 10px
+    color-mix(
+      in srgb,
+      var(--active-accent) 70%,
+      transparent
+    );
+}
+
+.nav-link:hover {
+  text-shadow:
+    0 0 14px
+    color-mix(
+      in srgb,
+      var(--active-accent) 42%,
+      transparent
+    );
+}
+
+.header-cv-button {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--active-accent) 26%,
+      transparent
+    );
+}
+
+.header-icon-button:hover,
+.header-cv-button:hover,
+.mobile-menu-button:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--active-accent) 58%,
+      transparent
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--active-accent) 7%,
+      rgba(2, 6, 8, 0.92)
+    );
+
+  box-shadow:
+    0 0 24px
+    color-mix(
+      in srgb,
+      var(--active-accent) 12%,
+      transparent
+    );
+}
+
+.mobile-navigation--open {
+  border-top-color:
+    color-mix(
+      in srgb,
+      var(--active-accent) 16%,
+      transparent
+    );
+}
+
+.mobile-nav-link span {
+  color:
+    color-mix(
+      in srgb,
+      var(--active-accent) 62%,
+      transparent
+    );
+}
+
+
+/* ============================================================
+   HERO — CYAN / INDIGO
+   ============================================================ */
+
+.hero-shell {
+  --section-accent: #00e6e6;
+  --section-accent-rgb: 0, 230, 230;
+  --section-secondary: #6d72ff;
+
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+
+  isolation: isolate;
+
+  background:
+    radial-gradient(
+      circle at 12% 30%,
+      rgba(0, 230, 230, 0.1),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 90% 70%,
+      rgba(109, 114, 255, 0.1),
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(2, 7, 9, 0.2),
+      rgba(2, 5, 6, 0.72)
+    );
+}
+
+/* Ruban diagonal qui annonce la section suivante. */
+.hero-shell::after {
+  content: "";
+
+  position: absolute;
+  z-index: 1;
+  right: -8%;
+  bottom: -1px;
+  left: -8%;
+
+  height: 88px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(
+        in srgb,
+        var(--section-accent) 42%,
+        transparent
+      ) 23%,
+      color-mix(
+        in srgb,
+        #a855f7 44%,
+        transparent
+      ) 77%,
+      transparent 100%
+    );
+
+  clip-path:
+    polygon(
+      0 78%,
+      100% 12%,
+      100% 19%,
+      0 86%
+    );
+
+  filter:
+    drop-shadow(
+      0 0 10px
+      color-mix(
+        in srgb,
+        var(--section-accent) 18%,
+        transparent
+      )
+    );
+}
+
+
+/* ============================================================
+   TECHNOLOGY CLOUD — VIOLET / MAGENTA
+   ============================================================ */
+
+.technology-cloud-section {
+  --section-accent: #a855f7;
+  --section-accent-rgb: 168, 85, 247;
+  --section-secondary: #ec4899;
+
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+
+  isolation: isolate;
+
+  border-top: 0;
+  border-bottom: 0;
+
+  background:
+    radial-gradient(
+      circle at 16% 20%,
+      rgba(168, 85, 247, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 82% 72%,
+      rgba(236, 72, 153, 0.08),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(12, 5, 20, 0.82),
+      rgba(4, 5, 10, 0.82)
+    );
+}
+
+.technology-cloud-section::after {
+  content: "";
+
+  position: absolute;
+  z-index: 3;
+  right: -8%;
+  bottom: -1px;
+  left: -8%;
+
+  height: 82px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      color-mix(
+        in srgb,
+        var(--section-accent) 45%,
+        transparent
+      ) 34%,
+      color-mix(
+        in srgb,
+        var(--section-secondary) 28%,
+        transparent
+      ) 68%,
+      transparent
+    );
+
+  clip-path:
+    polygon(
+      0 14%,
+      100% 76%,
+      100% 84%,
+      0 22%
+    );
+}
+
+.technology-cloud-item {
+  transition:
+    color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease,
+    background 220ms ease;
+}
+
+
+/* ============================================================
+   PROJETS — CONSERVATION DES COULEURS CUSTOM
+   ============================================================ */
+
+.project-showcase,
+.project-detail {
+  --cursor-accent: var(--project-accent);
+}
+
+/* On ne touche volontairement ni aux fonds ni aux thèmes
+   de Tybeau / Tybeau Pro / MyRendev / Spectral / Cogessur. */
+
+
+/* ============================================================
+   PAGE COMPÉTENCES — PALETTE PAR SOUS-SECTION
+   ============================================================ */
+
+.skills-page {
+  --section-accent: #7c83ff;
+  --section-accent-rgb: 124, 131, 255;
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+
+  background:
+    radial-gradient(
+      circle at 14% 12%,
+      rgba(124, 131, 255, 0.08),
+      transparent 30%
+    ),
+    #020506;
+}
+
+.skills-page-hero,
+.skills-capabilities,
+.skills-groups-section,
+.skills-architecture-section,
+.skills-page-cta {
+  position: relative;
+  isolation: isolate;
+}
+
+.skills-page-hero {
+  --section-accent: #7c83ff;
+  --section-accent-rgb: 124, 131, 255;
+  --section-next: #f6c453;
+
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+
+  background:
+    radial-gradient(
+      circle at 75% 18%,
+      rgba(124, 131, 255, 0.12),
+      transparent 34%
+    );
+}
+
+.skills-capabilities {
+  --section-accent: #f6c453;
+  --section-accent-rgb: 246, 196, 83;
+  --section-next: #ff5ca8;
+
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+
+  background:
+    radial-gradient(
+      circle at 12% 35%,
+      rgba(246, 196, 83, 0.075),
+      transparent 32%
+    );
+}
+
+.skills-groups-section {
+  --section-accent: #ff5ca8;
+  --section-accent-rgb: 255, 92, 168;
+  --section-next: #42d392;
+
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+
+  background:
+    radial-gradient(
+      circle at 88% 42%,
+      rgba(255, 92, 168, 0.075),
+      transparent 31%
+    );
+}
+
+.skills-architecture-section {
+  --section-accent: #42d392;
+  --section-accent-rgb: 66, 211, 146;
+  --section-next: #ff9f43;
+
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+
+  background:
+    radial-gradient(
+      circle at 16% 58%,
+      rgba(66, 211, 146, 0.075),
+      transparent 30%
+    );
+}
+
+.skills-page-cta {
+  --section-accent: #ff9f43;
+  --section-accent-rgb: 255, 159, 67;
+  --section-next: #8b5cf6;
+
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+}
+
+/* Séparateurs inclinés : le dégradé est contenu dans la même
+   forme que la diagonale, il ne "coupe" donc jamais à plat. */
+.skills-page-hero::after,
+.skills-capabilities::after,
+.skills-groups-section::after,
+.skills-architecture-section::after,
+.skills-page-cta::after {
+  content: "";
+
+  position: absolute;
+  z-index: 1;
+  right: -7%;
+  bottom: -34px;
+  left: -7%;
+
+  height: 72px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(
+        in srgb,
+        var(--section-accent) 44%,
+        transparent
+      ) 25%,
+      color-mix(
+        in srgb,
+        var(--section-next) 44%,
+        transparent
+      ) 75%,
+      transparent 100%
+    );
+
+  clip-path:
+    polygon(
+      0 72%,
+      100% 16%,
+      100% 23%,
+      0 80%
+    );
+
+  opacity: 0.72;
+}
+
+.skills-capabilities::after,
+.skills-architecture-section::after {
+  clip-path:
+    polygon(
+      0 15%,
+      100% 72%,
+      100% 80%,
+      0 23%
+    );
+}
+
+.skills-capability-card,
+.skills-technology,
+.skills-architecture-card {
+  transition:
+    transform 220ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease,
+    background 260ms ease;
+}
+
+
+/* ============================================================
+   CONTACT — ROSE CORAIL / AMBRE
+   ============================================================ */
+
+.contact-page {
+  --section-accent: #ff6b8a;
+  --section-accent-rgb: 255, 107, 138;
+  --section-secondary: #f59e0b;
+
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+
+  isolation: isolate;
+
+  background:
+    radial-gradient(
+      circle at 14% 26%,
+      rgba(255, 107, 138, 0.095),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 88% 76%,
+      rgba(245, 158, 11, 0.06),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(9, 4, 7, 0.44),
+      rgba(2, 5, 6, 0.82)
+    );
+}
+
+.contact-page-glow {
+  background:
+    color-mix(
+      in srgb,
+      var(--section-accent) 34%,
+      var(--section-secondary)
+    );
+
+  opacity: 0.22;
+}
+
+.contact-page::after {
+  content: "";
+
+  position: absolute;
+  z-index: 1;
+  right: -8%;
+  bottom: 0;
+  left: -8%;
+
+  height: 88px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      color-mix(
+        in srgb,
+        var(--section-accent) 48%,
+        transparent
+      ) 34%,
+      color-mix(
+        in srgb,
+        #8b5cf6 42%,
+        transparent
+      ) 72%,
+      transparent
+    );
+
+  clip-path:
+    polygon(
+      0 76%,
+      100% 12%,
+      100% 20%,
+      0 84%
+    );
+}
+
+.contact-card,
+.contact-method,
+.contact-method-icon {
+  transition:
+    transform 220ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease,
+    background 260ms ease,
+    color 260ms ease;
+}
+
+
+/* ============================================================
+   FOOTER — VIOLET
+   ============================================================ */
+
+.site-footer {
+  --section-accent: #8b5cf6;
+  --section-accent-rgb: 139, 92, 246;
+  --section-secondary: #22d3ee;
+
+  --accent: var(--section-accent);
+  --accent-rgb: var(--section-accent-rgb);
+  --cursor-accent: var(--section-accent);
+
+  border-top: 0;
+
+  background:
+    radial-gradient(
+      circle at 78% 68%,
+      rgba(139, 92, 246, 0.11),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 22% 88%,
+      rgba(34, 211, 238, 0.045),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #030407 0%,
+      #07050c 100%
+    );
+}
+
+/* Remplace le séparateur horizontal précédent par une diagonale. */
+.site-footer::before {
+  top: 12px;
+  right: -8%;
+  left: -8%;
+
+  width: auto;
+  height: 1px;
+
+  transform: rotate(-2.7deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      color-mix(
+        in srgb,
+        var(--section-accent) 74%,
+        transparent
+      ),
+      color-mix(
+        in srgb,
+        var(--section-secondary) 42%,
+        transparent
+      ),
+      transparent
+    );
+
+  box-shadow:
+    0 0 22px
+    color-mix(
+      in srgb,
+      var(--section-accent) 32%,
+      transparent
+    );
+}
+
+.site-footer::after {
+  content: "";
+
+  position: absolute;
+  z-index: 0;
+  top: -20px;
+  right: -8%;
+  left: -8%;
+
+  height: 74px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      color-mix(
+        in srgb,
+        var(--section-accent) 18%,
+        transparent
+      ),
+      transparent
+    );
+
+  clip-path:
+    polygon(
+      0 58%,
+      100% 0,
+      100% 18%,
+      0 76%
+    );
+}
+
+
+/* ============================================================
+   SCROLLBARS
+   ============================================================ */
+
+html,
+body,
+* {
+  scrollbar-width: thin;
+  scrollbar-color:
+    var(--active-accent)
+    rgba(255, 255, 255, 0.035);
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.018) 0,
+      rgba(255, 255, 255, 0.018) 5px,
+      transparent 5px,
+      transparent 10px
+    ),
+    #020506;
+
+  border-left:
+    1px solid
+    rgba(255, 255, 255, 0.03);
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  border:
+    3px solid
+    #020506;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--active-accent),
+      color-mix(
+        in srgb,
+        var(--active-accent) 52%,
+        #ffffff
+      )
+    );
+
+  background-clip: padding-box;
+
+  box-shadow:
+    inset 0 0 0 1px
+    color-mix(
+      in srgb,
+      var(--active-accent) 32%,
+      transparent
+    ),
+    0 0 12px
+    color-mix(
+      in srgb,
+      var(--active-accent) 22%,
+      transparent
+    );
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(
+        in srgb,
+        var(--active-accent) 86%,
+        #ffffff
+      ),
+      var(--active-accent)
+    );
+
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner {
+  background: #020506;
+}
+
+
+/* ============================================================
+   CURSEUR CUSTOM + HALO DE SECTION
+   ============================================================ */
+
+.custom-cursor {
+  --cursor-color: #00e6e6;
+
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+
+  width: 0;
+  height: 0;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transition:
+    opacity 160ms ease,
+    --cursor-color 220ms ease;
+
+  will-change: transform;
+}
+
+.custom-cursor[data-enabled="true"][data-visible="true"] {
+  opacity: 1;
+}
+
+.custom-cursor-halo,
+.custom-cursor-ring,
+.custom-cursor-core {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  pointer-events: none;
+}
+
+.custom-cursor-halo {
+  width: 150px;
+  height: 150px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      color-mix(
+        in srgb,
+        var(--cursor-color) 15%,
+        transparent
+      ) 0%,
+      color-mix(
+        in srgb,
+        var(--cursor-color) 7%,
+        transparent
+      ) 34%,
+      transparent 72%
+    );
+
+  filter: blur(10px);
+
+  opacity: 0.72;
+
+  mix-blend-mode: screen;
+
+  transition:
+    width 220ms ease,
+    height 220ms ease,
+    opacity 220ms ease,
+    background 220ms ease;
+}
+
+.custom-cursor-ring {
+  width: 30px;
+  height: 30px;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(45deg);
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--cursor-color) 62%,
+      transparent
+    );
+
+  border-radius: 6px;
+
+  box-shadow:
+    0 0 15px
+    color-mix(
+      in srgb,
+      var(--cursor-color) 18%,
+      transparent
+    ),
+    inset 0 0 12px
+    color-mix(
+      in srgb,
+      var(--cursor-color) 4%,
+      transparent
+    );
+
+  transition:
+    width 180ms ease,
+    height 180ms ease,
+    border-color 220ms ease,
+    border-radius 180ms ease,
+    box-shadow 220ms ease,
+    transform 180ms ease;
+}
+
+.custom-cursor-core {
+  width: 7px;
+  height: 7px;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(45deg);
+
+  border-radius: 1px;
+
+  background:
+    var(--cursor-color);
+
+  box-shadow:
+    0 0 8px
+      var(--cursor-color),
+    0 0 18px
+      color-mix(
+        in srgb,
+        var(--cursor-color) 52%,
+        transparent
+      );
+
+  transition:
+    width 180ms ease,
+    height 180ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.custom-cursor[data-interactive="true"]
+  .custom-cursor-ring {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 9px;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(45deg)
+    scale(1.02);
+
+  border-color:
+    var(--cursor-color);
+
+  box-shadow:
+    0 0 24px
+    color-mix(
+      in srgb,
+      var(--cursor-color) 30%,
+      transparent
+    );
+}
+
+.custom-cursor[data-interactive="true"]
+  .custom-cursor-core {
+  width: 9px;
+  height: 9px;
+}
+
+.custom-cursor[data-interactive="true"]
+  .custom-cursor-halo {
+  width: 185px;
+  height: 185px;
+  opacity: 0.9;
+}
+
+.custom-cursor[data-native="true"] {
+  opacity: 0 !important;
+}
+
+/* Le curseur système n'est masqué que pour une vraie souris.
+   Les champs de saisie gardent leur comportement natif. */
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  [role="button"],
+  summary {
+    cursor: none;
+  }
+
+  input,
+  textarea,
+  select,
+  [contenteditable="true"] {
+    cursor: auto;
+  }
+}
+
+
+/* ============================================================
+   MICRO-TRANSITIONS DE SECTION
+   ============================================================ */
+
+.hero-shell,
+.technology-cloud-section,
+.skills-page-hero,
+.skills-capabilities,
+.skills-groups-section,
+.skills-architecture-section,
+.skills-page-cta,
+.contact-page,
+.site-footer {
+  transition:
+    background-color 420ms ease,
+    border-color 420ms ease;
+}
+
+.hero-glow,
+.technology-cloud-glow,
+.contact-page-glow,
+.site-footer-glow {
+  animation:
+    section-glow-drift
+    13s
+    ease-in-out
+    infinite alternate;
+}
+
+@keyframes section-glow-drift {
+  0% {
+    transform:
+      translate3d(-10px, -6px, 0)
+      scale(0.98);
+  }
+
+  100% {
+    transform:
+      translate3d(14px, 10px, 0)
+      scale(1.04);
+  }
+}
+
+
+/* ============================================================
+   RESPONSIVE — CURSEUR / SÉPARATEURS
+   ============================================================ */
+
+@media (max-width: 900px), (pointer: coarse) {
+  .custom-cursor {
+    display: none;
+  }
+
+  body,
+  a,
+  button,
+  [role="button"],
+  summary {
+    cursor: auto;
+  }
+
+  .hero-shell::after,
+  .technology-cloud-section::after,
+  .skills-page-hero::after,
+  .skills-capabilities::after,
+  .skills-groups-section::after,
+  .skills-architecture-section::after,
+  .skills-page-cta::after,
+  .contact-page::after {
+    height: 58px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor {
+    display: none;
+  }
+
+  body,
+  a,
+  button,
+  [role="button"],
+  summary {
+    cursor: auto;
+  }
+
+  .hero-glow,
+  .technology-cloud-glow,
+  .contact-page-glow,
+  .site-footer-glow {
+    animation: none !important;
+  }
+}

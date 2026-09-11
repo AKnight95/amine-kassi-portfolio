@@ -1,6 +1,11 @@
-import type { Metadata } from "next";
-import { Oxanium, Poppins, Montserrat } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import {
+  Montserrat,
+  Oxanium,
+  Poppins,
+} from "next/font/google";
 
+import SectionEffects from "@/components/SectionEffects";
 import { siteConfig } from "@/config/site";
 
 import "./globals.css";
@@ -28,46 +33,42 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-
   title: {
     default: siteConfig.title,
-    template: "%s | Amine Kassi",
+    template: `%s · ${siteConfig.name}`,
   },
-
   description: siteConfig.description,
-
   authors: [
     {
       name: siteConfig.name,
     },
   ],
-
   creator: siteConfig.name,
-
-  alternates: {
-    canonical: "/",
-  },
-
+  applicationName: `${siteConfig.name} — Portfolio`,
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "/",
-    siteName: siteConfig.name,
-
+    url: siteConfig.url,
     title: siteConfig.title,
     description: siteConfig.description,
+    siteName: `${siteConfig.name} — Portfolio`,
   },
-
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
   },
-
   robots: {
     index: true,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#020506",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -78,12 +79,9 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body
-        className={`
-          ${poppins.variable}
-          ${oxanium.variable}
-          ${montserrat.variable}
-        `}
+        className={`${poppins.variable} ${oxanium.variable} ${montserrat.variable}`}
       >
+        <SectionEffects />
         {children}
       </body>
     </html>
